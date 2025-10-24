@@ -1,0 +1,15 @@
+[package]
+name = "common"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+prost = { workspace = true }
+serde = { workspace = true }
+rand = { workspace = true }
+tonic = { workspace = true }
+blake3 = { workspace = true }
+proto_gen = { path = "../proto_gen" }
+minchash = { workspace = true }
+
+

@@ -1,0 +1,11 @@
+
+[package]
+name = "xtask"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+xshell = "0.2"
+duct = "0.13"
+anyhow = "1.0"

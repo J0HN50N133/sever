@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package revocation;
+
+import "google/protobuf/empty.proto";
+
+// Shared message types
+message Credential {
+    string id = 1;
+    string user_did = 2;
+    string platform_id = 3;
+    bytes witness = 4;
+    uint64 version = 5;
+    bytes issuer_signature = 6;
+}
+
+// Blockchain Service
+service BlockchainService {
+    rpc GetAccumulator (google.protobuf.Empty) returns (AccumulatorState);
+    rpc UpdateAccumulator (UpdateAccumulatorRequest) returns (google.protobuf.Empty);
+}
+
+message AccumulatorState {
+    bytes root_hash = 1;
+    uint64 version = 2;
+}
+
+message UpdateAccumulatorRequest {
+    bytes new_root_hash = 1;
+    uint64 new_version = 2;
+}
+
+// Issuer Service
+service IssuerService {
+    rpc IssueCredential (IssueRequest) returns (Credential);
+    rpc RevokeCredential (RevokeRequest) returns (google.protobuf.Empty);
+    rpc RequestProof (ProofRequest) returns (Proof);
+}
+
+message IssueRequest {
+    string user_did = 1;
+    string platform_id = 2;
+}
+
+message RevokeRequest {
+    string credential_id = 1;
+}
+
+message ProofRequest {
+    string credential_id = 1;
+}
+
+message Proof {
+    bytes witness = 1;
+    uint64 version = 2;
+}

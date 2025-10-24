@@ -1,6 +1,44 @@
+[workspace]
+members = [
+  "xtask",
+  "common",
+  "blockchain_sim",
+  "issuer",
+  "client_lib",
+  "proto_gen",
+]
+
 [package]
 name = "sever"
 version = "0.1.0"
 edition = "2024"
 
+[workspace.dependencies]
+blake3 = "1.5"
+env_logger = "0.11"
+log = "0.4"
+minchash = { path = "/home/johnsonlee/code/minchash" }
+parking_lot = "0.12"
+prost = "0.14"
+rand = "0.9"
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1", features = ["full"] }
+tonic = "0.14"
+tonic-prost = "0.14"
+tonic-prost-build = "0.14"
+
 [dependencies]
+blake3 = { workspace = true }
+blockchain_sim = { path = "./blockchain_sim" }
+client_lib = { path = "./client_lib" }
+common = { path = "./common" }
+env_logger = { workspace = true }
+issuer = { path = "./issuer" }
+log = { workspace = true }
+minchash = { workspace = true }
+parking_lot = { workspace = true }
+prost = { workspace = true }
+rand = { workspace = true }
+serde = { workspace = true }
+tokio = { workspace = true }
+tonic = { workspace = true }

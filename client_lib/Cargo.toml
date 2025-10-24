@@ -1,0 +1,16 @@
+[package]
+name = "client_lib"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { workspace = true }
+tonic = { workspace = true }
+prost = { workspace = true }
+common = { path = "../common" }
+minchash = { workspace = true }
+log = { workspace = true }
+async-trait = "0.1"
+rand = { workspace = true }
+blake3 = { workspace = true }
+proto_gen = { path = "../proto_gen" }
