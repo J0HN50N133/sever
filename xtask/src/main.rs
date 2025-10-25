@@ -32,14 +32,19 @@ fn run_experiment() -> Result<()> {
     // 2. Run the services in the background
     println!("Starting background services...");
 
+    let blockchain_server_stdout = std::fs::File::create("blockchain_server.stdout.log")?;
+    let blockchain_server_stderr = std::fs::File::create("blockchain_server.stderr.log")?;
+    let issuer_server_stdout = std::fs::File::create("issuer_server.stdout.log")?;
+    let issuer_server_stderr = std::fs::File::create("issuer_server.stderr.log")?;
+
     let blockchain_server = duct::cmd(&blockchain_server_path, &[] as &[&str])
-        .stdout_capture()
-        .stderr_capture()
+        .stdout_file(blockchain_server_stdout)
+        .stderr_file(blockchain_server_stderr)
         .start()?;
     
     let issuer_server = duct::cmd(&issuer_server_path, &[] as &[&str])
-        .stdout_capture()
-        .stderr_capture()
+        .stdout_file(issuer_server_stdout)
+        .stderr_file(issuer_server_stderr)
         .start()?;
 
     // Use a guard to ensure servers are killed on panic or early return
@@ -58,11 +63,28 @@ fn run_experiment() -> Result<()> {
     let simulation_output = duct::cmd(&simulation_path, &[] as &[&str])
         .stdout_capture()
         .stderr_capture()
-        .read()?;
+        .unchecked() // Do not error on non-zero exit codes
+        .run()?;
 
     println!("--- Simulation Output ---");
-    println!("{}", simulation_output);
+    let stdout = String::from_utf8_lossy(&simulation_output.stdout);
+    let stderr = String::from_utf8_lossy(&simulation_output.stderr);
+    if !stdout.is_empty() {
+        println!("Stdout:
+{}", stdout);
+    }
+    if !stderr.is_empty() {
+        eprintln!("Stderr:
+{}", stderr);
+    }
     println!("--- End of Simulation ---");
+
+    if !simulation_output.status.success() {
+        anyhow::bail!(
+            "Simulation failed with exit code: {:?}",
+            simulation_output.status.code()
+        );
+    }
     
     // 5. Cleanup is handled by the ServerGuard's Drop implementation
     println!("Experiment finished. Cleaning up background services...");
