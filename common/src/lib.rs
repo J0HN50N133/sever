@@ -22,11 +22,11 @@ pub struct Config {
 impl Default for Config {
     fn default() -> Self {
         Self {
-            blockchain_addr: "http://[::1]:50051".to_string(),
-            issuer_addr: "http://[::1]:50052".to_string(),
+            blockchain_addr: "http://127.0.0.1:50051".to_string(),
+            issuer_addr: "http://127.0.0.1:50052".to_string(),
             batch_size: 100,
             batch_timeout_ms: 1000, // 1 second
-            num_users: 1000,
+            num_users: 10,
             num_platforms: 5,
             issue_req_per_sec: 10.0,
             revoke_req_per_sec: 1.0,
@@ -116,4 +116,8 @@ pub fn generate_did() -> String {
 pub fn generate_platform_id(num_platforms: usize) -> String {
     let mut rng = rand::rng();
     format!("platform:{}", rng.random_range(0..num_platforms))
+}
+
+pub fn logger_init() {
+    env_logger::builder().format_source_path(true).init();
 }

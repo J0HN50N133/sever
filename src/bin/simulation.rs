@@ -1,3 +1,4 @@
+use log::{debug, warn};
 use minchash::MultisetHash as _;
 use parking_lot::Mutex;
 use rand::{Rng, SeedableRng};
@@ -6,16 +7,16 @@ use tokio::time::sleep;
 
 use client_lib::verify_credential;
 use common::{
-    Config, Credential, generate_did, generate_platform_id,
+    Config, Credential, generate_did, generate_platform_id, logger_init,
     revocation::{
         IssueRequest, RevokeRequest, blockchain_service_client::BlockchainServiceClient,
         issuer_service_client::IssuerServiceClient,
     },
 };
 
-#[tokio::main]
+#[tokio::main(flavor = "multi_thread", worker_threads = 10)]
 pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    env_logger::init();
+    logger_init();
     let config = Config::default();
 
     log::info!("Starting simulation with config: {:?}", config);
@@ -23,7 +24,13 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create gRPC clients
     let _blockchain_client =
         BlockchainServiceClient::connect(config.blockchain_addr.clone()).await?;
-    let mut issuer_client = IssuerServiceClient::connect(config.issuer_addr.clone()).await?;
+    let mut issuer_client = loop {
+        if let Ok(cli) = IssuerServiceClient::connect(config.issuer_addr.clone()).await {
+            break cli;
+        }
+        warn!("Waiting for issuer service to be available...");
+    };
+    debug!("connected to issuer service.");
 
     let shared_credentials = Arc::new(Mutex::new(Vec::<Credential>::new()));
 
@@ -86,13 +93,15 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
             if local_creds.is_empty() { return; }
 
             let mut rng = rand::rngs::StdRng::from_rng(&mut rand::rng());
+            let mut simulationDuration = Box::pin(tokio::time::sleep(Duration::from_secs(cfg.simulation_duration_secs)));
             loop {
                 tokio::select! {
                     _ = sleep(Duration::from_millis(rng.random_range(100..1000))) => {
                         // Randomly pick an action
-                        let action_type = rng.random_range(0..100);
+                        let action_type = rng.random_range(0..=4);
 
-                        if action_type < (cfg.issue_req_per_sec * 10.0) as u32 { // Simulate new issuance
+                        if action_type == 0{ // Simulate new issuance
+                            debug!("creating a new cred");
                             let user_did = generate_did();
                             let platform_id = generate_platform_id(cfg.num_platforms);
                             let request = tonic::Request::new(IssueRequest {
@@ -115,7 +124,8 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 },
                                 Err(e) => log::error!("Simulation: Failed to issue credential: {:?}", e),
                             }
-                        } else if action_type < (cfg.issue_req_per_sec * 10.0 + cfg.revoke_req_per_sec * 10.0) as u32 && !local_creds.is_empty() { // Simulate revocation
+                        } else if action_type <= 3 && !local_creds.is_empty() { // Simulate revocation
+                            // revoke a random credential from local_creds
                             let idx = rng.random_range(0..local_creds.len());
                             let cred_to_revoke = local_creds.remove(idx);
                             let request = tonic::Request::new(RevokeRequest { credential_id: cred_to_revoke.id.clone() });
@@ -134,7 +144,7 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
                             local_creds[idx] = cred_to_verify; // Update local credential if witness was updated
                         }
                     }
-                    _ = tokio::time::sleep(Duration::from_secs(cfg.simulation_duration_secs)) => {
+                    _ = &mut simulationDuration => {
                         // Exit task after simulation duration
                         break;
                     }

@@ -1,4 +1,3 @@
-use blake3::hash;
 use common::{
     revocation::{
         blockchain_service_client::BlockchainServiceClient,
@@ -18,13 +17,15 @@ pub async fn verify_credential(
     // Step 1: (Simulate) Check the issuer's signature on the credential.
     // For now, we'll assume the signature is always valid in this simulation.
     // In a real system, this would involve cryptographic signature verification.
-    if credential.issuer_signature.is_empty() {
-        warn!(
-            "Credential {} has no issuer signature. Assuming invalid for now.",
-            credential.id
-        );
-        return Ok(false);
-    }
+    /* TODO: no need to do signature verification in this simulation
+        if credential.issuer_signature.is_empty() {
+            warn!(
+                "Credential {} has no issuer signature. Assuming invalid for now.",
+                credential.id
+            );
+            return Ok(false);
+        }
+    */
     // Simulate signature check success
     info!(
         "Simulated signature check passed for credential {}.",
@@ -82,7 +83,7 @@ pub async fn verify_credential(
     }
 
     // Step 5: Use the accumulator.verify_proof() method.
-    let credential_hash = hash(credential.id.as_bytes()).as_bytes().to_vec();
+    let credential_hash = blake3::hash(credential.id.as_bytes()).as_bytes().to_vec();
 
     // According to the trait definition, we need a SecureMultisetHash instance to call verify_proof.
     // We create a new, empty instance, assuming the implementation of verify_proof does not depend on the

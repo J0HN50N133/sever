@@ -1,4 +1,6 @@
+use anyhow::Context;
 use async_trait::async_trait;
+use log::warn;
 use parking_lot::Mutex;
 use std::{collections::HashMap, sync::Arc, time::Duration};
 use tokio::time::sleep;
@@ -37,9 +39,14 @@ pub enum IssuerRequest {
 }
 
 impl MyIssuer {
-    pub async fn new(config: Config) -> Result<Self, Box<dyn std::error::Error>> {
-        let blockchain_client =
-            BlockchainServiceClient::connect(config.blockchain_addr.clone()).await?;
+    pub async fn new(config: Config) -> anyhow::Result<Self> {
+        let blockchain_client = loop {
+            if let Ok(cli) = BlockchainServiceClient::connect(config.blockchain_addr.clone()).await
+            {
+                break cli;
+            }
+            warn!("Waiting for blockchain service to be available...");
+        };
 
         let state = Arc::new(Mutex::new(IssuerState {
             accumulator: SecureMultisetHash::new(),

@@ -11,5 +11,4 @@ tonic = { workspace = true }
 blake3 = { workspace = true }
 proto_gen = { path = "../proto_gen" }
 minchash = { workspace = true }
-
-
+env_logger = { workspace = true }

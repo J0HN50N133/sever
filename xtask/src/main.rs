@@ -1,6 +1,6 @@
-use std::env;
 use anyhow::Result;
-use xshell::{Shell, cmd};
+use std::env;
+use xshell::{cmd, Shell};
 
 fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
@@ -17,7 +17,7 @@ fn main() -> Result<()> {
 
 fn run_experiment() -> Result<()> {
     let sh = Shell::new()?;
-    
+
     // 1. Build all necessary binaries in release mode
     println!("Building binaries...");
     cmd!(sh, "cargo build --release --workspace").run()?;
@@ -36,12 +36,14 @@ fn run_experiment() -> Result<()> {
     let blockchain_server_stderr = std::fs::File::create("blockchain_server.stderr.log")?;
     let issuer_server_stdout = std::fs::File::create("issuer_server.stdout.log")?;
     let issuer_server_stderr = std::fs::File::create("issuer_server.stderr.log")?;
+    let simulation_client_stdout = std::fs::File::create("simulation_client.stdout.log")?;
+    let simulation_client_stderr = std::fs::File::create("simulation_client.stderr.log")?;
 
     let blockchain_server = duct::cmd(&blockchain_server_path, &[] as &[&str])
         .stdout_file(blockchain_server_stdout)
         .stderr_file(blockchain_server_stderr)
         .start()?;
-    
+
     let issuer_server = duct::cmd(&issuer_server_path, &[] as &[&str])
         .stdout_file(issuer_server_stdout)
         .stderr_file(issuer_server_stderr)
@@ -61,8 +63,8 @@ fn run_experiment() -> Result<()> {
     // 4. Run the simulation client in the foreground
     println!("Running experiment simulation...");
     let simulation_output = duct::cmd(&simulation_path, &[] as &[&str])
-        .stdout_capture()
-        .stderr_capture()
+        .stdout_file(simulation_client_stdout)
+        .stderr_file(simulation_client_stderr)
         .unchecked() // Do not error on non-zero exit codes
         .run()?;
 
@@ -70,12 +72,10 @@ fn run_experiment() -> Result<()> {
     let stdout = String::from_utf8_lossy(&simulation_output.stdout);
     let stderr = String::from_utf8_lossy(&simulation_output.stderr);
     if !stdout.is_empty() {
-        println!("Stdout:
-{}", stdout);
+        println!("Stdout: {}", stdout);
     }
     if !stderr.is_empty() {
-        eprintln!("Stderr:
-{}", stderr);
+        eprintln!("Stderr: {}", stderr);
     }
     println!("--- End of Simulation ---");
 
@@ -85,7 +85,7 @@ fn run_experiment() -> Result<()> {
             simulation_output.status.code()
         );
     }
-    
+
     // 5. Cleanup is handled by the ServerGuard's Drop implementation
     println!("Experiment finished. Cleaning up background services...");
 

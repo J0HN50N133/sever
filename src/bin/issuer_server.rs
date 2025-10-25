@@ -1,13 +1,13 @@
+use common::{Config, logger_init};
 use issuer::MyIssuer;
-use common::Config;
 use tonic::transport::Server;
 
 #[tokio::main]
 pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    env_logger::init();
+    logger_init();
 
     let config = Config::default();
-    let addr = config.issuer_addr.parse()?;
+    let addr = config.issuer_addr.replace("http://", "").parse()?;
     let issuer = MyIssuer::new(config).await?;
 
     log::info!("Issuer server listening on {}", addr);
