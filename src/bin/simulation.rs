@@ -21,7 +21,7 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
     log::info!("Starting simulation with config: {:?}", config);
 
     // Create gRPC clients
-    let mut blockchain_client =
+    let _blockchain_client =
         BlockchainServiceClient::connect(config.blockchain_addr.clone()).await?;
     let mut issuer_client = IssuerServiceClient::connect(config.issuer_addr.clone()).await?;
 
@@ -71,27 +71,26 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
         "Starting Simulation Loop for {} seconds.",
         config.simulation_duration_secs
     );
-    let start_time = tokio::time::Instant::now();
+    let _start_time = tokio::time::Instant::now();
     let mut tasks = Vec::new();
 
-    for i in 0..config.num_users {
+    for _ in 0..config.num_users {
         let mut bc_client =
             BlockchainServiceClient::connect(config.blockchain_addr.clone()).await?;
         let mut iss_client = IssuerServiceClient::connect(config.issuer_addr.clone()).await?;
         let creds = shared_credentials.clone();
         let cfg = Arc::new(config.clone());
 
-        let mut rng = rand::rngs::StdRng::from_seed(rand::thread_rng().gen());
-
         tasks.push(tokio::spawn(async move {
             let mut local_creds = creds.lock().clone(); // Each task gets a copy of initial credentials
             if local_creds.is_empty() { return; }
 
+            let mut rng = rand::rngs::StdRng::from_rng(&mut rand::rng());
             loop {
                 tokio::select! {
-                    _ = sleep(Duration::from_millis(rng.gen_range(100..1000))) => {
+                    _ = sleep(Duration::from_millis(rng.random_range(100..1000))) => {
                         // Randomly pick an action
-                        let action_type = rng.gen_range(0..100);
+                        let action_type = rng.random_range(0..100);
 
                         if action_type < (cfg.issue_req_per_sec * 10.0) as u32 { // Simulate new issuance
                             let user_did = generate_did();
@@ -117,7 +116,7 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 Err(e) => log::error!("Simulation: Failed to issue credential: {:?}", e),
                             }
                         } else if action_type < (cfg.issue_req_per_sec * 10.0 + cfg.revoke_req_per_sec * 10.0) as u32 && !local_creds.is_empty() { // Simulate revocation
-                            let idx = rng.gen_range(0..local_creds.len());
+                            let idx = rng.random_range(0..local_creds.len());
                             let cred_to_revoke = local_creds.remove(idx);
                             let request = tonic::Request::new(RevokeRequest { credential_id: cred_to_revoke.id.clone() });
                             match iss_client.revoke_credential(request).await {
@@ -125,7 +124,7 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 Err(e) => log::error!("Simulation: Failed to revoke credential {}: {:?}", cred_to_revoke.id, e),
                             }
                         } else if !local_creds.is_empty() { // Simulate verification
-                            let idx = rng.gen_range(0..local_creds.len());
+                            let idx = rng.random_range(0..local_creds.len());
                             let mut cred_to_verify = local_creds[idx].clone();
                             match verify_credential(&mut cred_to_verify, &mut bc_client, &mut iss_client).await {
                                 Ok(true) => log::debug!("Simulation: Verified credential {}.", cred_to_verify.id),

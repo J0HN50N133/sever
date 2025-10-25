@@ -1,5 +1,4 @@
 use issuer::MyIssuer;
-use common::revocation::issuer_service_server::IssuerServiceServer;
 use common::Config;
 use tonic::transport::Server;
 

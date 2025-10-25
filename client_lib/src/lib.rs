@@ -34,7 +34,7 @@ pub async fn verify_credential(
     // Step 2: Call get_accumulator on the blockchain simulator to get the latest root_hash and version.
     let blockchain_state_response = blockchain_client.get_accumulator(()).await?.into_inner();
 
-    let latest_root_hash = blockchain_state_response.root_hash;
+    let _latest_root_hash = blockchain_state_response.root_hash;
     let latest_version = blockchain_state_response.version;
 
     // Step 3: Compare the credential's version with the one from the blockchain.

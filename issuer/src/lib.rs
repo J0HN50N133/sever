@@ -1,6 +1,4 @@
 use async_trait::async_trait;
-use blake3;
-use futures::StreamExt;
 use parking_lot::Mutex;
 use std::{collections::HashMap, sync::Arc, time::Duration};
 use tokio::time::sleep;
@@ -11,8 +9,8 @@ use common::{
     revocation::{
         blockchain_service_client::BlockchainServiceClient,
         issuer_service_server::{IssuerService, IssuerServiceServer},
-        AccumulatorState, Credential as ProtoCredential, IssueRequest, Proof, ProofRequest,
-        RevokeRequest, UpdateAccumulatorRequest,
+        Credential as ProtoCredential, IssueRequest, Proof, ProofRequest, RevokeRequest,
+        UpdateAccumulatorRequest,
     },
     Config, Credential,
 };
@@ -24,21 +22,12 @@ pub struct MyIssuer {
     config: Arc<Config>,
 }
 
+#[derive(Debug)]
 pub struct IssuerState {
     pub accumulator: SecureMultisetHash,
     pub credentials_db: HashMap<String, Credential>, // Stores full credential data
     pub pending_requests: Vec<IssuerRequest>,
     pub current_version: u64,
-}
-
-impl std::fmt::Debug for IssuerState {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("IssuerState")
-            .field("credentials_db", &self.credentials_db)
-            .field("pending_requests", &self.pending_requests)
-            .field("current_version", &self.current_version)
-            .finish()
-    }
 }
 
 #[derive(Debug, Clone)]
@@ -209,7 +198,7 @@ impl IssuerService for MyIssuer {
         let credential_id = req.credential_id;
 
         let mut s = self.state.lock();
-        if let Some(credential) = s.credentials_db.remove(&credential_id) {
+        if let Some(_credential) = s.credentials_db.remove(&credential_id) {
             let credential_hash = blake3::hash(credential_id.as_bytes()).as_bytes().to_vec();
             s.pending_requests.push(IssuerRequest::Remove(
                 credential_id.clone(),
@@ -237,7 +226,7 @@ impl IssuerService for MyIssuer {
         let credential_id = req.credential_id;
 
         let s = self.state.lock();
-        if let Some(credential) = s.credentials_db.get(&credential_id) {
+        if let Some(_credential) = s.credentials_db.get(&credential_id) {
             let credential_hash = blake3::hash(credential_id.as_bytes()).as_bytes().to_vec();
             if let Some(witness) = s.accumulator.generate_proof(&credential_hash) {
                 let reply = Proof {

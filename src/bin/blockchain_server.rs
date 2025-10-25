@@ -1,5 +1,4 @@
 use blockchain_sim::MyBlockchain;
-use common::revocation::blockchain_service_server::BlockchainServiceServer;
 use common::Config;
 use tonic::transport::Server;
 
