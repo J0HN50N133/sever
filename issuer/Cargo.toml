@@ -8,7 +8,6 @@ async-trait = "0.1"
 anyhow = { workspace = true }
 blake3 = { workspace = true }
 common = { path = "../common" }
-env_logger = { workspace = true }
 futures = "0.3"
 log = { workspace = true }
 minchash = { workspace = true }
@@ -18,3 +17,7 @@ proto_gen = { path = "../proto_gen" }
 tokio = { workspace = true }
 tokio-stream = "0.1"
 tonic = { workspace = true }
+
+[dev-dependencies]
+blockchain_sim = { path = "../blockchain_sim" }
+logforth = { workspace = true }

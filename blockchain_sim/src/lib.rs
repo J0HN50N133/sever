@@ -51,7 +51,6 @@ impl BlockchainService for MyBlockchain {
         &self,
         request: Request<UpdateAccumulatorRequest>,
     ) -> Result<Response<()>, Status> {
-        // Use imported Empty
         let req = request.into_inner();
         let mut state = self.state.lock();
         state.root_hash = req.new_root_hash;
