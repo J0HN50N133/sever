@@ -143,7 +143,7 @@ fn run_prevoke_issuer_benchmarks(results: &mut ExperimentResults) {
 
     // 测试规模
     let sizes = vec![10_000, 50_000, 500_000, 1_000_000];
-    let batch_size = 50;
+    let batch_size = 100;
 
     for s in sizes {
         println!("Testing with {} elements", s);
@@ -193,36 +193,135 @@ fn run_prevoke_issuer_benchmarks(results: &mut ExperimentResults) {
             removal_10
         );
         let start = Instant::now();
+        {
+            let mut issuer = issuer.clone();
+            // 逐个撤销凭证
+            for idx in (0..elements_to_revoke.len()).step_by(batch_size) {
+                issuer.revoke_element(
+                    hint::black_box(&elements_to_revoke[idx..s.min(idx + batch_size)]),
+                    hint::black_box(&indices_to_revoke[idx..s.min(idx + batch_size)]),
+                );
+            }
 
-        // 逐个撤销凭证
-        for idx in (0..elements_to_revoke.len()).step_by(batch_size) {
-            issuer.revoke_element(
-                hint::black_box(&elements_to_revoke[idx..s.min(idx + batch_size)]),
-                hint::black_box(&indices_to_revoke[idx..s.min(idx + batch_size)]),
+            let revoke_dur = start.elapsed();
+
+            // 为剩余有效用户重新生成 Witness
+            println!(
+                "  - [Proof.Update] Regenerating Witnesses for {} remaining users...",
+                s - removal_10
+            );
+            let start = Instant::now();
+            let remaining_count = s - removal_10;
+            issuer.generate_proofs_bulk(hint::black_box(remaining_count));
+
+            let proof_update_dur = start.elapsed();
+            let total_dur = revoke_dur + proof_update_dur;
+
+            results.add_labeled_metric("Acc.Revoke, 10%", s, total_dur, Some(remaining_count));
+            println!(
+                "    ✓ Revoke: {:.2} ms, Proof Update: {:.2} ms, Total: {:.2} ms",
+                revoke_dur.as_secs_f64() * 1000.0,
+                proof_update_dur.as_secs_f64() * 1000.0,
+                total_dur.as_secs_f64() * 1000.0
             );
         }
 
-        let revoke_dur = start.elapsed();
+        // --- 4. Acc.Revoke (25% Individual Revocation) ---
+        let removal_25 = (s as f64 * 0.25) as usize;
+        let elements_to_revoke_25 = &element_slices[0..removal_25];
+        let indices_to_revoke_25 = &issued_indices[0..removal_25];
 
-        // 为剩余有效用户重新生成 Witness
         println!(
-            "  - [Proof.Update] Regenerating Witnesses for {} remaining users...",
-            s - removal_10
+            "  - [Revoke 25%] Revoking {} credentials one by one...",
+            removal_25
         );
         let start = Instant::now();
-        let remaining_count = s - removal_10;
-        issuer.generate_proofs_bulk(hint::black_box(remaining_count));
 
-        let proof_update_dur = start.elapsed();
-        let total_dur = revoke_dur + proof_update_dur;
+        {
+            let mut issuer = issuer.clone();
+            // 逐个撤销凭证
+            for idx in (0..elements_to_revoke_25.len()).step_by(batch_size) {
+                issuer.revoke_element(
+                    hint::black_box(&elements_to_revoke_25[idx..s.min(idx + batch_size)]),
+                    hint::black_box(&indices_to_revoke_25[idx..s.min(idx + batch_size)]),
+                );
+            }
 
-        results.add_labeled_metric("Acc.Revoke, 10%", s, total_dur, Some(remaining_count));
+            let revoke_dur_25 = start.elapsed();
+
+            // 为剩余有效用户重新生成 Witness
+            println!(
+                "  - [Proof.Update] Regenerating Witnesses for {} remaining users...",
+                s - removal_25
+            );
+            let start = Instant::now();
+            let remaining_count_25 = s - removal_25;
+            issuer.generate_proofs_bulk(hint::black_box(remaining_count_25));
+
+            let proof_update_dur_25 = start.elapsed();
+            let total_dur_25 = revoke_dur_25 + proof_update_dur_25;
+
+            results.add_labeled_metric(
+                "Acc.Revoke, 25%",
+                s,
+                total_dur_25,
+                Some(remaining_count_25),
+            );
+            println!(
+                "    ✓ Revoke: {:.2} ms, Proof Update: {:.2} ms, Total: {:.2} ms",
+                revoke_dur_25.as_secs_f64() * 1000.0,
+                proof_update_dur_25.as_secs_f64() * 1000.0,
+                total_dur_25.as_secs_f64() * 1000.0
+            );
+        }
+
+        // --- 5. Acc.Revoke (50% Individual Revocation) ---
+        let removal_50 = (s as f64 * 0.50) as usize;
+        let elements_to_revoke_50 = &element_slices[0..removal_50];
+        let indices_to_revoke_50 = &issued_indices[0..removal_50];
+
         println!(
-            "    ✓ Revoke: {:.2} ms, Proof Update: {:.2} ms, Total: {:.2} ms",
-            revoke_dur.as_secs_f64() * 1000.0,
-            proof_update_dur.as_secs_f64() * 1000.0,
-            total_dur.as_secs_f64() * 1000.0
+            "  - [Revoke 50%] Revoking {} credentials one by one...",
+            removal_50
         );
+        let start = Instant::now();
+        {
+            let mut issuer = issuer.clone();
+            // 逐个撤销凭证
+            for idx in (0..elements_to_revoke_50.len()).step_by(batch_size) {
+                issuer.revoke_element(
+                    hint::black_box(&elements_to_revoke_50[idx..s.min(idx + batch_size)]),
+                    hint::black_box(&indices_to_revoke_50[idx..s.min(idx + batch_size)]),
+                );
+            }
+
+            let revoke_dur_50 = start.elapsed();
+
+            // 为剩余有效用户重新生成 Witness
+            println!(
+                "  - [Proof.Update] Regenerating Witnesses for {} remaining users...",
+                s - removal_50
+            );
+            let start = Instant::now();
+            let remaining_count_50 = s - removal_50;
+            issuer.generate_proofs_bulk(hint::black_box(remaining_count_50));
+
+            let proof_update_dur_50 = start.elapsed();
+            let total_dur_50 = revoke_dur_50 + proof_update_dur_50;
+
+            results.add_labeled_metric(
+                "Acc.Revoke, 50%",
+                s,
+                total_dur_50,
+                Some(remaining_count_50),
+            );
+            println!(
+                "    ✓ Revoke: {:.2} ms, Proof Update: {:.2} ms, Total: {:.2} ms",
+                revoke_dur_50.as_secs_f64() * 1000.0,
+                proof_update_dur_50.as_secs_f64() * 1000.0,
+                total_dur_50.as_secs_f64() * 1000.0
+            );
+        }
     }
 }
 

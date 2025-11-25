@@ -1,91 +1,147 @@
 {
   "experiment_name": "prevoke_rs_merkle_benchmark",
-  "timestamp": "2025-11-25T17:04:48.245165646+00:00",
+  "timestamp": "2025-11-25T18:48:40.162316165+00:00",
   "total_duration_ms": 0.0,
   "metrics": {
-    "Acc.Revoke, 10%_10000": {
-      "name": "Acc.Revoke, 10%",
-      "duration_ms": 33.899197,
-      "operations": 9000,
-      "throughput_ops_per_sec": 265493.0144805495,
-      "element_count": 10000
-    },
-    "Acc.Generation_1000000": {
-      "name": "Acc.Generation",
-      "duration_ms": 499398.72254,
-      "operations": 1000000,
-      "throughput_ops_per_sec": 2002.4080055989805,
-      "element_count": 1000000
-    },
-    "Acc.Revoke, 10%_50000": {
-      "name": "Acc.Revoke, 10%",
-      "duration_ms": 647.061738,
-      "operations": 45000,
-      "throughput_ops_per_sec": 69545.14130149355,
-      "element_count": 50000
-    },
     "Acc.Revoke, 10%_500000": {
       "name": "Acc.Revoke, 10%",
-      "duration_ms": 68111.14904599999,
+      "duration_ms": 32242.390655999996,
       "operations": 450000,
-      "throughput_ops_per_sec": 6606.847870032042,
-      "element_count": 500000
-    },
-    "Proof.Generation_50000": {
-      "name": "Proof.Generation",
-      "duration_ms": 46.702658,
-      "operations": 50000,
-      "throughput_ops_per_sec": 1070602.8766071515,
-      "element_count": 50000
-    },
-    "Proof.Generation_500000": {
-      "name": "Proof.Generation",
-      "duration_ms": 556.6463940000001,
-      "operations": 500000,
-      "throughput_ops_per_sec": 898236.3047518457,
-      "element_count": 500000
-    },
-    "Proof.Generation_10000": {
-      "name": "Proof.Generation",
-      "duration_ms": 7.343635,
-      "operations": 10000,
-      "throughput_ops_per_sec": 1361723.4516693708,
-      "element_count": 10000
-    },
-    "Acc.Generation_500000": {
-      "name": "Acc.Generation",
-      "duration_ms": 104640.42507099999,
-      "operations": 500000,
-      "throughput_ops_per_sec": 4778.268051383994,
+      "throughput_ops_per_sec": 13956.781455852106,
       "element_count": 500000
     },
     "Acc.Generation_10000": {
       "name": "Acc.Generation",
-      "duration_ms": 42.15669,
+      "duration_ms": 24.255118,
       "operations": 10000,
-      "throughput_ops_per_sec": 237210.2743360544,
+      "throughput_ops_per_sec": 412284.1208193669,
       "element_count": 10000
     },
-    "Proof.Generation_1000000": {
-      "name": "Proof.Generation",
-      "duration_ms": 1059.1913200000001,
-      "operations": 1000000,
-      "throughput_ops_per_sec": 944116.498235654,
-      "element_count": 1000000
+    "Acc.Revoke, 25%_10000": {
+      "name": "Acc.Revoke, 25%",
+      "duration_ms": 35.444825,
+      "operations": 7500,
+      "throughput_ops_per_sec": 211596.47423848193,
+      "element_count": 10000
     },
-    "Acc.Revoke, 10%_1000000": {
-      "name": "Acc.Revoke, 10%",
-      "duration_ms": 315186.116143,
-      "operations": 900000,
-      "throughput_ops_per_sec": 2855.4557256946873,
+    "Acc.Revoke, 50%_10000": {
+      "name": "Acc.Revoke, 50%",
+      "duration_ms": 58.708442,
+      "operations": 5000,
+      "throughput_ops_per_sec": 85166.62731400707,
+      "element_count": 10000
+    },
+    "Acc.Revoke, 50%_50000": {
+      "name": "Acc.Revoke, 50%",
+      "duration_ms": 1468.942467,
+      "operations": 25000,
+      "throughput_ops_per_sec": 17019.04639672998,
+      "element_count": 50000
+    },
+    "Proof.Generation_500000": {
+      "name": "Proof.Generation",
+      "duration_ms": 528.21759,
+      "operations": 500000,
+      "throughput_ops_per_sec": 946579.6093613618,
+      "element_count": 500000
+    },
+    "Acc.Revoke, 50%_1000000": {
+      "name": "Acc.Revoke, 50%",
+      "duration_ms": 758872.8023410001,
+      "operations": 500000,
+      "throughput_ops_per_sec": 658.8719459408491,
       "element_count": 1000000
     },
     "Acc.Generation_50000": {
       "name": "Acc.Generation",
-      "duration_ms": 725.358893,
+      "duration_ms": 476.68904299999997,
       "operations": 50000,
-      "throughput_ops_per_sec": 68931.39448970677,
+      "throughput_ops_per_sec": 104890.18099792993,
       "element_count": 50000
+    },
+    "Acc.Revoke, 25%_500000": {
+      "name": "Acc.Revoke, 25%",
+      "duration_ms": 80586.347151,
+      "operations": 375000,
+      "throughput_ops_per_sec": 4653.39369828164,
+      "element_count": 500000
+    },
+    "Acc.Revoke, 10%_1000000": {
+      "name": "Acc.Revoke, 10%",
+      "duration_ms": 154182.27661700002,
+      "operations": 900000,
+      "throughput_ops_per_sec": 5837.246794815888,
+      "element_count": 1000000
+    },
+    "Acc.Revoke, 50%_500000": {
+      "name": "Acc.Revoke, 50%",
+      "duration_ms": 163763.61778899998,
+      "operations": 250000,
+      "throughput_ops_per_sec": 1526.5906028169861,
+      "element_count": 500000
+    },
+    "Proof.Generation_50000": {
+      "name": "Proof.Generation",
+      "duration_ms": 44.683847,
+      "operations": 50000,
+      "throughput_ops_per_sec": 1118972.5898040964,
+      "element_count": 50000
+    },
+    "Proof.Generation_10000": {
+      "name": "Proof.Generation",
+      "duration_ms": 6.916623,
+      "operations": 10000,
+      "throughput_ops_per_sec": 1445792.260182462,
+      "element_count": 10000
+    },
+    "Acc.Generation_1000000": {
+      "name": "Acc.Generation",
+      "duration_ms": 271630.00395,
+      "operations": 1000000,
+      "throughput_ops_per_sec": 3681.478428222804,
+      "element_count": 1000000
+    },
+    "Acc.Revoke, 25%_50000": {
+      "name": "Acc.Revoke, 25%",
+      "duration_ms": 750.543196,
+      "operations": 37500,
+      "throughput_ops_per_sec": 49963.813142075305,
+      "element_count": 50000
+    },
+    "Proof.Generation_1000000": {
+      "name": "Proof.Generation",
+      "duration_ms": 1120.680397,
+      "operations": 1000000,
+      "throughput_ops_per_sec": 892315.0638459859,
+      "element_count": 1000000
+    },
+    "Acc.Revoke, 10%_10000": {
+      "name": "Acc.Revoke, 10%",
+      "duration_ms": 19.935226,
+      "operations": 9000,
+      "throughput_ops_per_sec": 451462.15046671656,
+      "element_count": 10000
+    },
+    "Acc.Revoke, 25%_1000000": {
+      "name": "Acc.Revoke, 25%",
+      "duration_ms": 418380.996766,
+      "operations": 750000,
+      "throughput_ops_per_sec": 1792.624439918035,
+      "element_count": 1000000
+    },
+    "Acc.Revoke, 10%_50000": {
+      "name": "Acc.Revoke, 10%",
+      "duration_ms": 340.975987,
+      "operations": 45000,
+      "throughput_ops_per_sec": 131974.10291534694,
+      "element_count": 50000
+    },
+    "Acc.Generation_500000": {
+      "name": "Acc.Generation",
+      "duration_ms": 64298.533993000005,
+      "operations": 500000,
+      "throughput_ops_per_sec": 7776.22706070458,
+      "element_count": 500000
     }
   }
 }
