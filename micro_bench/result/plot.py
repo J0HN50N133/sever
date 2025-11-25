@@ -46,7 +46,6 @@ def common():
         BATCH_BENCHMARK_RESULTS_FILE,
         BENCHMARK_RESULTS_FILE,
         PLOT_STYLE,
-        ScalarFormatter,
         VERIFICATION_RESULTS_FILE,
         json,
         np,
@@ -101,7 +100,6 @@ def ___(mo):
 def issuer_compute_overheads(
     BENCHMARK_RESULTS_FILE,
     PLOT_STYLE,
-    ScalarFormatter,
     json,
     np,
     plt,
@@ -110,7 +108,10 @@ def issuer_compute_overheads(
     setup_plot_style,
 ):
     # --- Style and Data Loading ---
-    _colors = setup_plot_style(PLOT_STYLE)
+    _PLOT_STYLE = dict(PLOT_STYLE)
+    _PLOT_STYLE["legend_fontsize"] = 18
+    _PLOT_STYLE['label_fontsize'] = 18
+    _colors = setup_plot_style(_PLOT_STYLE)
     with open(BENCHMARK_RESULTS_FILE, 'r') as _f:
         _sever_data = json.load(_f)
     with open('prevoke_issuer_overheads_results.json', 'r') as _f:
@@ -172,50 +173,74 @@ def issuer_compute_overheads(
     _counts = _all_counts
     _plot_data = _combined_plot_data
     _x_labels = _format_x_labels(_counts)
-    _max_duration = max(_all_durations) if _all_durations else 0
-    _y_max = int(np.ceil(_max_duration / 10)) * 10
 
-    # --- Plotting ---
-    _fig, _ax = plt.subplots(figsize=PLOT_STYLE["figsize"])
+    # Calculate min/max on original data for limits and formatter
+    _all_positive_durations = [d for d in _all_durations if d is not None and d >= 0]
+    _max_original_duration = max(_all_positive_durations) if _all_positive_durations else 0
+    _min_original_duration = min(_all_positive_durations, default=0)
+
+    # --- Plotting (Linear Y-axis with log1p transformed data) ---
+    _fig, _ax = plt.subplots(figsize=_PLOT_STYLE["figsize"])
     _markers = ['o', 's', '^', 'D', 'v', '<', '>', 'p', '*', 'h']
 
     for i, _label in enumerate(_labels):
         _y_values = _plot_data[_label]
-        _valid_points = [(np.log10(c), y) for c, y in zip(_counts, _y_values) if y is not None]
+        # Transform y values using log1p
+        _valid_points = [(c, np.log1p(y)) for c, y in zip(_counts, _y_values) if y is not None and y >= 0]
         if _valid_points:
-            _x_valid, _y_valid = zip(*_valid_points)
-            # Use dashed line style for Prevoke data, solid for others
+            _x_valid, _y_valid_transformed = zip(*_valid_points)
             _linestyle = '--' if _label.startswith('Prevoke-') else '-'
-            _ax.plot(_x_valid, _y_valid, color=_colors[i], marker=_markers[i % len(_markers)],
-                    linewidth=PLOT_STYLE["linewidth"], markersize=PLOT_STYLE["markersize"],
-                    label=_label, markerfacecolor='white', markeredgewidth=PLOT_STYLE["marker_edgewidth"],
+            _ax.plot(_x_valid, _y_valid_transformed, color=_colors[i], marker=_markers[i % len(_markers)],
+                    linewidth=_PLOT_STYLE["linewidth"], markersize=_PLOT_STYLE["markersize"],
+                    label=_label, markerfacecolor='white', markeredgewidth=_PLOT_STYLE["marker_edgewidth"],
                     linestyle=_linestyle)
 
     # --- Axes and Legend Configuration ---
-    _ax.set_xscale('log')
-    _ax.set_xticks(np.log10(_counts))
-    _ax.set_xticklabels(_x_labels, fontsize=PLOT_STYLE["tick_fontsize"])
+    _ax.set_xscale('log') # Keep x-axis log scale
+
+    _ax.set_xticks(_counts)
+    _ax.set_xticklabels(_x_labels, fontsize=_PLOT_STYLE["tick_fontsize"])
     _ax.xaxis.set_minor_formatter(plt.NullFormatter())
     _ax.tick_params(axis='x', which='minor', bottom=False)
 
-    _ax.set_xlabel('Total number of clients', fontsize=PLOT_STYLE["label_fontsize"])
-    _ax.set_ylabel('Overheads (seconds)', fontsize=PLOT_STYLE["label_fontsize"])
+    _ax.set_xlabel('Total number of clients', fontsize=_PLOT_STYLE["label_fontsize"])
+    _ax.set_ylabel('Overheads log scale(seconds)', fontsize=_PLOT_STYLE["label_fontsize"]) # Update label
 
-    _ax.set_ylim(0, _y_max + 5)
-    _ax.set_yticks(np.arange(0, _y_max + 1, 10))
-    _ax.set_yticklabels([str(int(t)) for t in np.arange(0, _y_max + 1, 10)], fontsize=10)
-                        #PLOT_STYLE["tick_fontsize"])
-    _ax.yaxis.set_major_formatter(ScalarFormatter())
+    # Set y-limits based on transformed data
+    # Ensure lower limit is not too small if min_original_duration is 0
+    lower_limit_transformed = np.log1p(_min_original_duration)
+    if _min_original_duration == 0:
+        lower_limit_transformed = np.log1p(0.01) # Use a small epsilon for the lower bound if original min is 0
+
+    _ax.set_ylim(bottom=lower_limit_transformed * 0.9,
+                 top=np.log1p(_max_original_duration) * 1.1)
+
+    # Custom formatter for y-axis ticks to show original values
+    from matplotlib.ticker import FuncFormatter
+    def log1p_formatter(y_transformed, pos):
+        original_y = np.expm1(y_transformed) # exp(y_transformed) - 1
+        if original_y == 0:
+            return "0"
+        # Format based on magnitude
+        if original_y < 1:
+            return f"{original_y:.2f}"
+        elif original_y < 10:
+            return f"{original_y:.1f}"
+        else:
+            return f"{int(original_y)}"
+
+    _ax.yaxis.set_major_formatter(FuncFormatter(log1p_formatter))
+    _ax.tick_params(axis='y', labelsize=_PLOT_STYLE["tick_fontsize"])
 
     set_ax_border(_ax)
-    _ax.grid(True, linestyle='--', alpha=PLOT_STYLE["grid_alpha"])
+    _ax.grid(True, which="both", linestyle='--', alpha=_PLOT_STYLE["grid_alpha"])
 
-    _legend = _ax.legend(loc='best', fontsize=PLOT_STYLE["legend_fontsize"], frameon=True, ncol=1, fancybox=True, shadow=True)
+    _legend = _ax.legend(loc='best', fontsize=_PLOT_STYLE["legend_fontsize"], frameon=True, ncol=1, fancybox=True, shadow=True)
     _legend.get_frame().set_facecolor('white')
     _legend.get_frame().set_alpha(0.9)
 
     plt.tight_layout()
-    save_fig(plt, 'issuer_overheads')
+    save_fig(plt, 'issuer_overheads') # New name
     plt.show()
     return
 
