@@ -1001,6 +1001,7 @@ dependencies = [
  "blake3",
  "hex",
  "k256",
+ "rand",
  "rayon",
 ]
 

@@ -14,7 +14,7 @@ def ___(mo):
 
 
 @app.cell
-def _():
+def common():
     import json
     import matplotlib.pyplot as plt
     import numpy as np
@@ -56,7 +56,7 @@ def _():
 
 
 @app.cell
-def _(plt, sns):
+def utils_func(plt, sns):
     def setup_plot_style(style_config):
         """Sets up the global plotting style for seaborn and matplotlib."""
         sns.set_theme(style="whitegrid")
@@ -98,7 +98,7 @@ def ___(mo):
 
 
 @app.cell
-def _(
+def issuer_compute_overheads(
     BENCHMARK_RESULTS_FILE,
     PLOT_STYLE,
     ScalarFormatter,
@@ -112,7 +112,7 @@ def _(
     # --- Style and Data Loading ---
     _colors = setup_plot_style(PLOT_STYLE)
     with open(BENCHMARK_RESULTS_FILE, 'r') as _f:
-        _data = json.load(_f)
+        _sever_data = json.load(_f)
 
     # --- Data Extraction and Processing ---
     def _extract_issuer_data(raw_data):
@@ -154,7 +154,7 @@ def _(
                 _labels.append(str(_count))
         return _labels
 
-    _labels, _counts, _plot_data, _all_durations = _extract_issuer_data(_data)
+    _labels, _counts, _plot_data, _all_durations = _extract_issuer_data(_sever_data)
     _x_labels = _format_x_labels(_counts)
     _max_duration = max(_all_durations) if _all_durations else 0
     _y_max = int(np.ceil(_max_duration / 10)) * 10

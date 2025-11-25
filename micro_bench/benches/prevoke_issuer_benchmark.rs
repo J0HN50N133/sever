@@ -45,18 +45,23 @@ impl PrevokeIssuer {
 
     // --- 1. Accumulator Generation ---
     // 对应论文：初始化并将 H(vcID) 插入 MTAcc
-    pub fn add_element(&mut self, element: &[u8]) -> usize {
+    pub fn add_element(&mut self, elements: &[Vec<u8>]) -> usize {
         // 1. 计算新元素的 Hash (Sha256)
-        let mut h = Sha256Hasher::new();
-        h.update(element);
-        let leaf_hash: [u8; 32] = h.finalize().into();
+        let mut leaves: Vec<_> = elements
+            .iter()
+            .map(|element| {
+                let mut h = Sha256Hasher::new();
+                h.update(element);
+                let leaf_hash: [u8; 32] = h.finalize().into();
+                leaf_hash
+            })
+            .collect();
 
         // 2. 添加到叶子列表
         let index = self.leaves.len();
-        self.leaves.push(leaf_hash);
+        self.leaves.extend(&leaves);
         if let Some(tree) = &mut self.tree {
-            tree.insert(leaf_hash);
-            tree.commit();
+            tree.append(&mut leaves).commit();
         } else {
             // 3. 重建整个 Merkle Tree (rs_merkle 是 immutable 的)
             self.tree = Some(MerkleTree::<Sha256>::from_leaves(&self.leaves));
@@ -84,21 +89,27 @@ impl PrevokeIssuer {
     // 1. 更新 Bloom Filter
     // 2. 将 MTAcc 对应位置替换为随机 Hash
     // 3. 更新 MTAcc (Root)
-    pub fn revoke_element(&mut self, element: &[u8], element_index: usize) {
+    pub fn revoke_element(&mut self, elements: &[&[u8]], indices: &[usize]) {
         // 1. 更新 Bloom Filter (计算 k 个 hash 并置位)
-        let indexes = self.get_bloom_indexes(element);
-        for idx in indexes {
-            let byte_idx = idx / 8;
-            let bit_idx = idx % 8;
-            self.bloom_filter[byte_idx] |= 1 << bit_idx;
-        }
+        let n = elements.len();
+        assert_eq!(n, indices.len());
+        for i in 0..n {
+            let element = &elements[i];
+            let element_index = indices[i];
+            let indexes = self.get_bloom_indexes(element);
+            for idx in indexes {
+                let byte_idx = idx / 8;
+                let bit_idx = idx % 8;
+                self.bloom_filter[byte_idx] |= 1 << bit_idx;
+            }
 
-        // 2. 更新 Merkle Tree Leaves
-        // Prevoke 是"替换"而不是"删除"，这保持树的高度不变
-        let mut rng = rng();
-        let mut random_hash = [0u8; 32];
-        rng.fill(&mut random_hash);
-        self.leaves[element_index] = random_hash;
+            // 2. 更新 Merkle Tree Leaves
+            // Prevoke 是"替换"而不是"删除"，这保持树的高度不变
+            let mut rng = rng();
+            let mut random_hash = [0u8; 32];
+            rng.fill(&mut random_hash);
+            self.leaves[element_index] = random_hash;
+        }
 
         // 3. 重建 Merkle Tree 以获取新 Root
         // rs_merkle 这种 immutable 库通常通过重新 from_leaves 构建最快
@@ -132,6 +143,7 @@ fn run_prevoke_issuer_benchmarks(results: &mut ExperimentResults) {
 
     // 测试规模
     let sizes = vec![10_000, 50_000, 500_000, 1_000_000];
+    let batch_size = 50;
 
     for s in sizes {
         println!("Testing with {} elements", s);
@@ -146,9 +158,12 @@ fn run_prevoke_issuer_benchmarks(results: &mut ExperimentResults) {
         let mut issued_indices = Vec::new();
 
         // 逐个签发凭证
-        for element in &element_slices {
-            let index = issuer.add_element(hint::black_box(element));
-            issued_indices.push(index);
+        for idx in (0..element_slices.len()).step_by(batch_size) {
+            let index =
+                issuer.add_element(hint::black_box(&elements[idx..s.min(idx + batch_size)]));
+            for index in index..s.min(index + batch_size) {
+                issued_indices.push(index);
+            }
         }
 
         let dur = start.elapsed();
@@ -180,8 +195,11 @@ fn run_prevoke_issuer_benchmarks(results: &mut ExperimentResults) {
         let start = Instant::now();
 
         // 逐个撤销凭证
-        for (element, &index) in elements_to_revoke.iter().zip(indices_to_revoke.iter()) {
-            issuer.revoke_element(hint::black_box(element), hint::black_box(index));
+        for idx in (0..elements_to_revoke.len()).step_by(batch_size) {
+            issuer.revoke_element(
+                hint::black_box(&elements_to_revoke[idx..s.min(idx + batch_size)]),
+                hint::black_box(&indices_to_revoke[idx..s.min(idx + batch_size)]),
+            );
         }
 
         let revoke_dur = start.elapsed();
@@ -213,6 +231,6 @@ fn main() {
     run_prevoke_issuer_benchmarks(&mut results);
 
     // 保存结果... (复用你的 common 逻辑)
-    let _ = results.save_to_file("prevoke_results.json");
+    let _ = results.save_to_file("prevoke_issuer_overheads_results.json");
     print_summary(&results);
 }
