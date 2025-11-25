@@ -1,0 +1,175 @@
+{
+  "experiment_name": "minchash_secure_lazy_batch_performance",
+  "timestamp": "2025-11-19T13:10:58.624475389+00:00",
+  "total_duration_ms": 246410.94902200002,
+  "metrics": {
+    "S1-Issuance_100": {
+      "name": "S1-Issuance",
+      "duration_ms": 359.912693,
+      "operations": 10000,
+      "throughput_ops_per_sec": 27784.516063177576,
+      "element_count": 100
+    },
+    "S2-Revoke25%_10": {
+      "name": "S2-Revoke25%",
+      "duration_ms": 523.002933,
+      "operations": 2500,
+      "throughput_ops_per_sec": 4780.087915874078,
+      "element_count": 10
+    },
+    "S1-Issuance_1000": {
+      "name": "S1-Issuance",
+      "duration_ms": 359.601637,
+      "operations": 10000,
+      "throughput_ops_per_sec": 27808.549714694433,
+      "element_count": 1000
+    },
+    "S2-Revoke10%_50": {
+      "name": "S2-Revoke10%",
+      "duration_ms": 42.462259,
+      "operations": 1000,
+      "throughput_ops_per_sec": 23550.32500743778,
+      "element_count": 50
+    },
+    "S1-Issuance_1": {
+      "name": "S1-Issuance",
+      "duration_ms": 20987.985169000003,
+      "operations": 10000,
+      "throughput_ops_per_sec": 476.4630773024537,
+      "element_count": 1
+    },
+    "S2-Revoke25%_100": {
+      "name": "S2-Revoke25%",
+      "duration_ms": 92.72619399999999,
+      "operations": 2500,
+      "throughput_ops_per_sec": 26961.097961165106,
+      "element_count": 100
+    },
+    "S2-Revoke10%_1": {
+      "name": "S2-Revoke10%",
+      "duration_ms": 2097.2074799999996,
+      "operations": 1000,
+      "throughput_ops_per_sec": 476.8245438453234,
+      "element_count": 1
+    },
+    "S2-Revoke25%_1000": {
+      "name": "S2-Revoke25%",
+      "duration_ms": 90.99446499999999,
+      "operations": 2500,
+      "throughput_ops_per_sec": 27474.1985680118,
+      "element_count": 1000
+    },
+    "S2-Revoke10%_500": {
+      "name": "S2-Revoke10%",
+      "duration_ms": 36.753550000000004,
+      "operations": 1000,
+      "throughput_ops_per_sec": 27208.256073222856,
+      "element_count": 500
+    },
+    "S1-Issuance_50": {
+      "name": "S1-Issuance",
+      "duration_ms": 421.631187,
+      "operations": 10000,
+      "throughput_ops_per_sec": 23717.410638316942,
+      "element_count": 50
+    },
+    "S2-Revoke25%_500": {
+      "name": "S2-Revoke25%",
+      "duration_ms": 92.09249799999999,
+      "operations": 2500,
+      "throughput_ops_per_sec": 27146.61947816857,
+      "element_count": 500
+    },
+    "S1-Issuance_10": {
+      "name": "S1-Issuance",
+      "duration_ms": 2091.15916,
+      "operations": 10000,
+      "throughput_ops_per_sec": 4782.036772370784,
+      "element_count": 10
+    },
+    "S1-Issuance_500": {
+      "name": "S1-Issuance",
+      "duration_ms": 357.589279,
+      "operations": 10000,
+      "throughput_ops_per_sec": 27965.044220467247,
+      "element_count": 500
+    },
+    "S2-Revoke25%_50": {
+      "name": "S2-Revoke25%",
+      "duration_ms": 107.118852,
+      "operations": 2500,
+      "throughput_ops_per_sec": 23338.562291537626,
+      "element_count": 50
+    },
+    "S2-Revoke50%_1": {
+      "name": "S2-Revoke50%",
+      "duration_ms": 10822.116311,
+      "operations": 5000,
+      "throughput_ops_per_sec": 462.0168418369164,
+      "element_count": 1
+    },
+    "S2-Revoke10%_100": {
+      "name": "S2-Revoke10%",
+      "duration_ms": 36.033736,
+      "operations": 1000,
+      "throughput_ops_per_sec": 27751.77128455401,
+      "element_count": 100
+    },
+    "S2-Revoke25%_1": {
+      "name": "S2-Revoke25%",
+      "duration_ms": 5248.195937,
+      "operations": 2500,
+      "throughput_ops_per_sec": 476.3541662716698,
+      "element_count": 1
+    },
+    "S2-Revoke50%_10": {
+      "name": "S2-Revoke50%",
+      "duration_ms": 1111.990766,
+      "operations": 5000,
+      "throughput_ops_per_sec": 4496.440215943305,
+      "element_count": 10
+    },
+    "S2-Revoke50%_500": {
+      "name": "S2-Revoke50%",
+      "duration_ms": 196.151614,
+      "operations": 5000,
+      "throughput_ops_per_sec": 25490.486150167493,
+      "element_count": 500
+    },
+    "S2-Revoke50%_1000": {
+      "name": "S2-Revoke50%",
+      "duration_ms": 191.413482,
+      "operations": 5000,
+      "throughput_ops_per_sec": 26121.462019065093,
+      "element_count": 1000
+    },
+    "S2-Revoke10%_1000": {
+      "name": "S2-Revoke10%",
+      "duration_ms": 35.532706,
+      "operations": 1000,
+      "throughput_ops_per_sec": 28143.085978309675,
+      "element_count": 1000
+    },
+    "S2-Revoke10%_10": {
+      "name": "S2-Revoke10%",
+      "duration_ms": 209.710666,
+      "operations": 1000,
+      "throughput_ops_per_sec": 4768.4746754845555,
+      "element_count": 10
+    },
+    "S2-Revoke50%_50": {
+      "name": "S2-Revoke50%",
+      "duration_ms": 210.53482200000002,
+      "operations": 5000,
+      "throughput_ops_per_sec": 23749.040431895868,
+      "element_count": 50
+    },
+    "S2-Revoke50%_100": {
+      "name": "S2-Revoke50%",
+      "duration_ms": 194.828445,
+      "operations": 5000,
+      "throughput_ops_per_sec": 25663.603689902673,
+      "element_count": 100
+    }
+  }
+}

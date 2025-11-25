@@ -1,0 +1,262 @@
+mod fast;
+mod secure;
+
+pub use fast::FastMultisetHash;
+pub use secure::SecureMultisetHash;
+
+pub trait MultisetHash: Clone {
+    type Proof;
+    /// Creates a new, empty multiset hash.
+    fn new() -> Self
+    where
+        Self: Sized;
+    /// Adds a single element (provided as a byte slice) to the hash.
+    fn add(&mut self, data: &[u8]);
+    /// Removes a single element (provided as a byte slice) from the hash.
+    fn remove(&mut self, data: &[u8]);
+    /// Adds multiple elements (in parallel) to the hash.
+    fn add_elements<T>(&mut self, elements: &[T])
+    where
+        T: AsRef<[u8]> + Sync;
+    /// Removes multiple elements (in parallel) from the hash.
+    fn remove_elements<T>(&mut self, elements: &[T])
+    where
+        T: AsRef<[u8]> + Sync;
+    /// Returns the current "compressed" state as a vector of bytes.
+    fn get_compressed(&self) -> Option<Vec<u8>>;
+    /// Returns a 32‑byte digest of the current state.
+    fn get_digest(&self) -> Option<Vec<u8>>;
+
+    /// Constructs a multiset hash from a digest.
+    fn from_compressed(digest: &[u8]) -> Self
+    where
+        Self: Sized;
+
+    // generate proof for an element
+    fn generate_proof(&self, element: &[u8]) -> Option<Self::Proof>;
+    /// verify
+    fn verify_proof(&self, element: &[u8], proof: &Self::Proof) -> bool;
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{fast::FastMultisetHash, secure::SecureMultisetHash, MultisetHash};
+    use itertools::Itertools;
+    use rand::prelude::*;
+    use rand::thread_rng;
+    use std::collections::HashSet;
+
+    // Generic test functions that work with any MultisetHash implementation
+    fn test_basic_impl<T: MultisetHash>() {
+        let mut ms = T::new();
+        let mut hashes = Vec::new();
+        hashes.push(ms.get_compressed());
+
+        ms.add("foo".as_bytes());
+        hashes.push(ms.get_compressed());
+
+        ms.add("world".as_bytes());
+        hashes.push(ms.get_compressed());
+
+        ms.add("hello".as_bytes());
+        hashes.push(ms.get_compressed());
+
+        ms.add("hello".as_bytes());
+        hashes.push(ms.get_compressed());
+
+        assert_eq!(hashes.pop().unwrap(), ms.get_compressed());
+
+        ms.remove("hello".as_bytes());
+        assert_eq!(hashes.pop().unwrap(), ms.get_compressed());
+
+        ms.remove("hello".as_bytes());
+        assert_eq!(hashes.pop().unwrap(), ms.get_compressed());
+
+        ms.remove("world".as_bytes());
+        assert_eq!(hashes.pop().unwrap(), ms.get_compressed());
+
+        ms.remove("foo".as_bytes());
+        assert_eq!(hashes.pop().unwrap(), ms.get_compressed());
+
+        assert_eq!(ms.get_compressed(), None);
+    }
+
+    fn test_permutations_of_subsets_impl<T: MultisetHash>() {
+        let test_set = vec!["1", "2", "3", "4", "5", "6", "7"];
+
+        for r in 0..=test_set.len() {
+            for subset in test_set.iter().combinations(r) {
+                let mut hash_values = HashSet::new();
+
+                for perm in subset.iter().permutations(r) {
+                    let mut ms = T::new();
+                    for element in &perm {
+                        ms.add(element.as_bytes());
+                    }
+                    hash_values.insert(ms.get_compressed());
+                }
+
+                assert_eq!(
+                    hash_values.len(),
+                    1,
+                    "Permutation hash mismatch for subset: {:?}. Got: {:?}",
+                    subset,
+                    hash_values
+                );
+            }
+        }
+    }
+
+    fn test_add_elements_impl<T: MultisetHash>() {
+        let mut ms = T::new();
+        let elements = vec![
+            "apple".as_bytes(),
+            "banana".as_bytes(),
+            "cherry".as_bytes(),
+            "date".as_bytes(),
+            "elderberry".as_bytes(),
+        ];
+
+        ms.add_elements(&elements);
+
+        let mut ms_seq = T::new();
+        for &elem in &elements {
+            ms_seq.add(elem);
+        }
+
+        assert_eq!(ms.get_compressed(), ms_seq.get_compressed());
+    }
+
+    fn test_remove_elements_impl<T: MultisetHash>() {
+        let mut ms = T::new();
+        let elements = vec![
+            "fig".as_bytes(),
+            "grape".as_bytes(),
+            "honeydew".as_bytes(),
+            "kiwi".as_bytes(),
+            "lemon".as_bytes(),
+        ];
+
+        ms.add_elements(&elements);
+        ms.remove_elements(&["grape".as_bytes(), "lemon".as_bytes()]);
+
+        let mut ms_expected = T::new();
+        for &elem in &elements {
+            if elem != "grape".as_bytes() && elem != "lemon".as_bytes() {
+                ms_expected.add(elem);
+            }
+        }
+
+        assert_eq!(ms.get_compressed(), ms_expected.get_compressed());
+    }
+
+    fn test_parallel_consistency_impl<T: MultisetHash>() {
+        let mut rng = thread_rng();
+        let elements: Vec<String> = (0..1000).map(|i| format!("item{}", i)).collect();
+        let mut shuffled = elements.clone();
+        shuffled.shuffle(&mut rng);
+
+        let mut ms = T::new();
+        ms.add_elements(&elements.iter().map(|s| s.as_bytes()).collect::<Vec<_>>());
+        ms.remove_elements(&shuffled.iter().map(|s| s.as_bytes()).collect::<Vec<_>>());
+
+        assert_eq!(ms.get_compressed(), None);
+    }
+
+    // Tests for both implementations
+    #[test]
+    fn test_basic() {
+        test_basic_impl::<SecureMultisetHash>();
+        test_basic_impl::<FastMultisetHash>();
+    }
+
+    #[test]
+    fn test_permutations_of_subsets() {
+        test_permutations_of_subsets_impl::<SecureMultisetHash>();
+        test_permutations_of_subsets_impl::<FastMultisetHash>();
+    }
+
+    #[test]
+    fn test_add_elements() {
+        test_add_elements_impl::<SecureMultisetHash>();
+        test_add_elements_impl::<FastMultisetHash>();
+    }
+
+    #[test]
+    fn test_remove_elements() {
+        test_remove_elements_impl::<SecureMultisetHash>();
+        test_remove_elements_impl::<FastMultisetHash>();
+    }
+
+    #[test]
+    fn test_parallel_consistency() {
+        test_parallel_consistency_impl::<SecureMultisetHash>();
+        test_parallel_consistency_impl::<FastMultisetHash>();
+    }
+
+    fn test_remove_then_add_impl<T: MultisetHash>() {
+        let mut ms1 = T::new();
+        ms1.remove(b"foo");
+        ms1.add(b"foo");
+        ms1.add(b"foo");
+        let ms1_compressed = ms1.get_compressed();
+
+        let mut ms2 = T::new();
+        ms2.add(b"foo");
+        let ms2_compressed = ms2.get_compressed();
+
+        assert_eq!(ms1_compressed, ms2_compressed);
+        assert!(ms1.get_digest().is_some_and(|d| d.len() == 32));
+    }
+
+    #[test]
+    fn test_remove_then_add() {
+        test_remove_then_add_impl::<SecureMultisetHash>();
+        test_remove_then_add_impl::<FastMultisetHash>();
+    }
+
+    fn test_proofs_impl<T: MultisetHash>() {
+        let mut ms = T::new();
+        ms.add(b"foo");
+        ms.add(b"bar");
+
+        let proof = ms.generate_proof(b"foo").unwrap();
+        assert!(ms.verify_proof(b"foo", &proof));
+        assert!(!ms.verify_proof(b"bar", &proof));
+    }
+
+    #[test]
+    fn test_proofs() {
+        test_proofs_impl::<SecureMultisetHash>();
+        test_proofs_impl::<FastMultisetHash>();
+    }
+
+    fn test_from_digest_impl<T: MultisetHash>() {
+        let mut ms = T::new();
+        ms.add(b"hello");
+        ms.add(b"world");
+
+        if let Some(compressed) = ms.get_compressed() {
+            let ms2 = T::from_compressed(&compressed);
+            assert_eq!(ms.get_compressed(), ms2.get_compressed());
+        }
+    }
+
+    #[test]
+    fn test_from_digest() {
+        test_from_digest_impl::<SecureMultisetHash>();
+        test_from_digest_impl::<FastMultisetHash>();
+    }
+
+    #[test]
+    fn test_from_digest_fast() {
+        let mut ms = FastMultisetHash::new();
+        ms.add(b"hello");
+        ms.add(b"world");
+
+        if let Some(digest) = ms.get_digest() {
+            let ms2 = FastMultisetHash::from_compressed(&digest);
+            assert_eq!(ms.get_compressed(), ms2.get_compressed());
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "ra": {
+      "command": "mcp-language-server",
+      "args": [
+        "--workspace",
+        "/home/johnsonlee/code/minchash",
+        "--lsp",
+        "rust-analyzer"
+      ]
+    }
+  }
+}

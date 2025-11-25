@@ -1,0 +1,70 @@
+Total experiment time: 435386.91 ms
+
+Lazy.CacheSize.10:
+  Lazy.CacheSize.10_100000: 3214.50 ms, 31109.05 ops/sec
+
+Lazy.Scalability.Clients.1000:
+  Lazy.Scalability.Clients.1000_500000: 32.89 ms, 30401.05 ops/sec
+
+Lazy.VersionDistance.50:
+  Lazy.VersionDistance.50_100000: 3126.38 ms, 31985.84 ops/sec
+
+Lazy.Scalability.Clients.100000:
+  Lazy.Scalability.Clients.100000_500000: 3094.62 ms, 32314.18 ops/sec
+
+Lazy.Scalability.Clients.10000:
+  Lazy.Scalability.Clients.10000_500000: 312.98 ms, 31950.69 ops/sec
+
+Lazy.CacheSize.50:
+  Lazy.CacheSize.50_100000: 3173.85 ms, 31507.44 ops/sec
+
+Lazy.VersionDistance.5:
+  Lazy.VersionDistance.5_100000: 3079.46 ms, 32473.27 ops/sec
+
+Lazy.CacheSize.1000:
+  Lazy.CacheSize.1000_100000: 3089.56 ms, 32367.07 ops/sec
+
+Lazy.CacheSize.0:
+  Lazy.CacheSize.0_100000: 4.58 ms, 21820644.77 ops/sec
+
+Lazy.VersionDistance.100:
+  Lazy.VersionDistance.100_100000: 3153.03 ms, 31715.56 ops/sec
+
+Lazy.Verification.Throughput.WithNewElements:
+  Lazy.Verification.Throughput.WithNewElements_500000: 15719.52 ms, 31807.58 ops/sec
+  Lazy.Verification.Throughput.WithNewElements_10000: 307.34 ms, 32537.41 ops/sec
+  Lazy.Verification.Throughput.WithNewElements_50000: 1554.94 ms, 32155.68 ops/sec
+  Lazy.Verification.Throughput.WithNewElements_1000000: 31927.01 ms, 31321.44 ops/sec
+
+Lazy.VersionDistance.10:
+  Lazy.VersionDistance.10_100000: 3095.60 ms, 32303.89 ops/sec
+
+Lazy.Verification.Throughput.WithRevocations:
+  Lazy.Verification.Throughput.WithRevocations_50000: 1537.05 ms, 32529.84 ops/sec
+  Lazy.Verification.Throughput.WithRevocations_10000: 302.78 ms, 33026.78 ops/sec
+  Lazy.Verification.Throughput.WithRevocations_500000: 16144.92 ms, 30969.49 ops/sec
+  Lazy.Verification.Throughput.WithRevocations_1000000: 32532.16 ms, 30738.81 ops/sec
+
+Lazy.CacheSize.100:
+  Lazy.CacheSize.100_100000: 3150.63 ms, 31739.66 ops/sec
+
+Lazy.VersionDistance.500:
+  Lazy.VersionDistance.500_100000: 3100.80 ms, 32249.75 ops/sec
+
+Lazy.Scalability.Clients.5000:
+  Lazy.Scalability.Clients.5000_500000: 166.25 ms, 30074.56 ops/sec
+
+Lazy.Verification.Throughput.NoNewElements:
+  Lazy.Verification.Throughput.NoNewElements_1000000: 31280.69 ms, 31968.61 ops/sec
+  Lazy.Verification.Throughput.NoNewElements_50000: 1540.04 ms, 32466.75 ops/sec
+  Lazy.Verification.Throughput.NoNewElements_500000: 16170.59 ms, 30920.33 ops/sec
+  Lazy.Verification.Throughput.NoNewElements_10000: 307.44 ms, 32527.14 ops/sec
+
+Lazy.Scalability.Clients.50000:
+  Lazy.Scalability.Clients.50000_500000: 1560.82 ms, 32034.43 ops/sec
+
+Lazy.VersionDistance.1:
+  Lazy.VersionDistance.1_100000: 3111.82 ms, 32135.56 ops/sec
+
+Lazy.CacheSize.500:
+  Lazy.CacheSize.500_100000: 3105.15 ms, 32204.52 ops/sec

@@ -1,0 +1,169 @@
+{
+  "experiment_name": "minchash_secure_lazy_client_performance",
+  "timestamp": "2025-11-19T11:53:36.624049010+00:00",
+  "total_duration_ms": 10923.281142,
+  "metrics": {
+    "Lazy.VersionDistance.100_10000": {
+      "name": "Lazy.VersionDistance.100",
+      "duration_ms": 310.254303,
+      "operations": 10000,
+      "throughput_ops_per_sec": 32231.62387533429,
+      "element_count": 10000,
+      "avg_latency_ms": 0.030916,
+      "max_latency_ms": 0.23685
+    },
+    "Lazy.VersionDistance.500_10000": {
+      "name": "Lazy.VersionDistance.500",
+      "duration_ms": 312.430539,
+      "operations": 10000,
+      "throughput_ops_per_sec": 32007.11438775196,
+      "element_count": 10000,
+      "avg_latency_ms": 0.031145,
+      "max_latency_ms": 0.213132
+    },
+    "Lazy.Verification.WithNewElements_10000": {
+      "name": "Lazy.Verification.WithNewElements",
+      "duration_ms": 313.599928,
+      "operations": 10000,
+      "throughput_ops_per_sec": 31887.762423210763,
+      "element_count": 10000,
+      "avg_latency_ms": 0.031167,
+      "max_latency_ms": 0.198914
+    },
+    "Lazy.Scalability.Clients.5000_10000": {
+      "name": "Lazy.Scalability.Clients.5000",
+      "duration_ms": 161.97549999999998,
+      "operations": 5000,
+      "throughput_ops_per_sec": 30868.865970470844,
+      "element_count": 10000,
+      "avg_latency_ms": 0.032278,
+      "max_latency_ms": 0.106832
+    },
+    "Lazy.Verification.WithRevocations_50%_10000": {
+      "name": "Lazy.Verification.WithRevocations_50%",
+      "duration_ms": 2.828524,
+      "operations": 10000,
+      "throughput_ops_per_sec": 3535412.8160128747,
+      "element_count": 10000,
+      "avg_latency_ms": 0.00022,
+      "max_latency_ms": 0.031010999999999997
+    },
+    "Lazy.Scalability.Clients.2000_10000": {
+      "name": "Lazy.Scalability.Clients.2000",
+      "duration_ms": 63.22495,
+      "operations": 2000,
+      "throughput_ops_per_sec": 31633.08156036501,
+      "element_count": 10000,
+      "avg_latency_ms": 0.031507,
+      "max_latency_ms": 0.136493
+    },
+    "Lazy.CacheSize.0_10000": {
+      "name": "Lazy.CacheSize.0",
+      "duration_ms": 0.833116,
+      "operations": 10000,
+      "throughput_ops_per_sec": 12003130.416412601,
+      "element_count": 10000,
+      "avg_latency_ms": 0.0,
+      "max_latency_ms": 0.0
+    },
+    "Lazy.Verification.WithRevocations_10%_10000": {
+      "name": "Lazy.Verification.WithRevocations_10%",
+      "duration_ms": 279.940376,
+      "operations": 10000,
+      "throughput_ops_per_sec": 35721.89243612361,
+      "element_count": 10000,
+      "avg_latency_ms": 0.027829,
+      "max_latency_ms": 0.212678
+    },
+    "Lazy.CacheSize.10_10000": {
+      "name": "Lazy.CacheSize.10",
+      "duration_ms": 311.998524,
+      "operations": 10000,
+      "throughput_ops_per_sec": 32051.433679218302,
+      "element_count": 10000,
+      "avg_latency_ms": 0.031090999999999997,
+      "max_latency_ms": 0.413667
+    },
+    "Lazy.CacheSize.50_10000": {
+      "name": "Lazy.CacheSize.50",
+      "duration_ms": 309.930209,
+      "operations": 10000,
+      "throughput_ops_per_sec": 32265.328482387464,
+      "element_count": 10000,
+      "avg_latency_ms": 0.030897,
+      "max_latency_ms": 0.139074
+    },
+    "Lazy.VersionDistance.1000_10000": {
+      "name": "Lazy.VersionDistance.1000",
+      "duration_ms": 323.809024,
+      "operations": 10000,
+      "throughput_ops_per_sec": 30882.400609070115,
+      "element_count": 10000,
+      "avg_latency_ms": 0.032268,
+      "max_latency_ms": 0.301696
+    },
+    "Lazy.VersionDistance.2000_10000": {
+      "name": "Lazy.VersionDistance.2000",
+      "duration_ms": 319.150485,
+      "operations": 10000,
+      "throughput_ops_per_sec": 31333.181273404614,
+      "element_count": 10000,
+      "avg_latency_ms": 0.031782000000000005,
+      "max_latency_ms": 0.396247
+    },
+    "Lazy.CacheSize.1000_10000": {
+      "name": "Lazy.CacheSize.1000",
+      "duration_ms": 312.06152199999997,
+      "operations": 10000,
+      "throughput_ops_per_sec": 32044.963236447973,
+      "element_count": 10000,
+      "avg_latency_ms": 0.031107,
+      "max_latency_ms": 0.278707
+    },
+    "Lazy.Verification.WithRevocations_25%_10000": {
+      "name": "Lazy.Verification.WithRevocations_25%",
+      "duration_ms": 139.920359,
+      "operations": 9999,
+      "throughput_ops_per_sec": 71469.22771974877,
+      "element_count": 10000,
+      "avg_latency_ms": 0.013849,
+      "max_latency_ms": 0.14228600000000002
+    },
+    "Lazy.Scalability.Clients.1000_10000": {
+      "name": "Lazy.Scalability.Clients.1000",
+      "duration_ms": 32.251543,
+      "operations": 1000,
+      "throughput_ops_per_sec": 31006.268444272573,
+      "element_count": 10000,
+      "avg_latency_ms": 0.032139,
+      "max_latency_ms": 0.062041
+    },
+    "Lazy.CacheSize.100_10000": {
+      "name": "Lazy.CacheSize.100",
+      "duration_ms": 308.279135,
+      "operations": 10000,
+      "throughput_ops_per_sec": 32438.13435508699,
+      "element_count": 10000,
+      "avg_latency_ms": 0.030732000000000002,
+      "max_latency_ms": 0.222874
+    },
+    "Lazy.Scalability.Clients.10000_10000": {
+      "name": "Lazy.Scalability.Clients.10000",
+      "duration_ms": 322.809412,
+      "operations": 10000,
+      "throughput_ops_per_sec": 30978.031086652452,
+      "element_count": 10000,
+      "avg_latency_ms": 0.03217,
+      "max_latency_ms": 1.596751
+    },
+    "Lazy.CacheSize.500_10000": {
+      "name": "Lazy.CacheSize.500",
+      "duration_ms": 310.099229,
+      "operations": 10000,
+      "throughput_ops_per_sec": 32247.742221893757,
+      "element_count": 10000,
+      "avg_latency_ms": 0.030914999999999998,
+      "max_latency_ms": 0.13977299999999998
+    }
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "experiment_name": "minchash_secure_lazy_concurrent_verification",
+  "timestamp": "2025-11-19T13:11:42.875532443+00:00",
+  "total_duration_ms": 246410.94902200002,
+  "metrics": {
+    "S3-Concurrent-Lazy-50%_500": {
+      "name": "S3-Concurrent-Lazy-50%",
+      "duration_ms": 194.91697399999998,
+      "operations": 4000,
+      "throughput_ops_per_sec": 20521.558066051242,
+      "element_count": 500,
+      "avg_latency_ms": 0.04971,
+      "max_latency_ms": 0.166806,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-50%_1000": {
+      "name": "S3-Concurrent-Lazy-50%",
+      "duration_ms": 198.154505,
+      "operations": 3999,
+      "throughput_ops_per_sec": 20186.268285951912,
+      "element_count": 1000,
+      "avg_latency_ms": 0.054915,
+      "max_latency_ms": 0.212527,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-25%_1000": {
+      "name": "S3-Concurrent-Lazy-25%",
+      "duration_ms": 95.22035500000001,
+      "operations": 4000,
+      "throughput_ops_per_sec": 42007.82490256416,
+      "element_count": 1000,
+      "avg_latency_ms": 0.048349,
+      "max_latency_ms": 0.257357,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-25%_500": {
+      "name": "S3-Concurrent-Lazy-25%",
+      "duration_ms": 96.230705,
+      "operations": 4000,
+      "throughput_ops_per_sec": 41566.77434712756,
+      "element_count": 500,
+      "avg_latency_ms": 0.050765,
+      "max_latency_ms": 0.5439830000000001,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-50%_10": {
+      "name": "S3-Concurrent-Lazy-50%",
+      "duration_ms": 1102.7295100000001,
+      "operations": 4000,
+      "throughput_ops_per_sec": 3627.3627972466247,
+      "element_count": 10,
+      "avg_latency_ms": 0.058071,
+      "max_latency_ms": 0.180265,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-25%_50": {
+      "name": "S3-Concurrent-Lazy-25%",
+      "duration_ms": 107.245037,
+      "operations": 3999,
+      "throughput_ops_per_sec": 37297.76325220532,
+      "element_count": 50,
+      "avg_latency_ms": 0.050988,
+      "max_latency_ms": 0.58116,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-10%_1000": {
+      "name": "S3-Concurrent-Lazy-10%",
+      "duration_ms": 36.26838,
+      "operations": 4000,
+      "throughput_ops_per_sec": 110288.9073071364,
+      "element_count": 1000,
+      "avg_latency_ms": 0.056197,
+      "max_latency_ms": 0.581488,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-50%_50": {
+      "name": "S3-Concurrent-Lazy-50%",
+      "duration_ms": 217.77675699999998,
+      "operations": 4000,
+      "throughput_ops_per_sec": 18367.433031432276,
+      "element_count": 50,
+      "avg_latency_ms": 0.052647,
+      "max_latency_ms": 0.148773,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-10%_50": {
+      "name": "S3-Concurrent-Lazy-10%",
+      "duration_ms": 42.47996,
+      "operations": 3999,
+      "throughput_ops_per_sec": 94162.04723356613,
+      "element_count": 50,
+      "avg_latency_ms": 0.050832999999999996,
+      "max_latency_ms": 0.303664,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-50%_1": {
+      "name": "S3-Concurrent-Lazy-50%",
+      "duration_ms": 11272.448865,
+      "operations": 4000,
+      "throughput_ops_per_sec": 354.847473508588,
+      "element_count": 1,
+      "avg_latency_ms": 0.055515,
+      "max_latency_ms": 0.132147,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-25%_10": {
+      "name": "S3-Concurrent-Lazy-25%",
+      "duration_ms": 557.093671,
+      "operations": 4000,
+      "throughput_ops_per_sec": 7180.1210608260535,
+      "element_count": 10,
+      "avg_latency_ms": 0.054589,
+      "max_latency_ms": 0.518429,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-25%_100": {
+      "name": "S3-Concurrent-Lazy-25%",
+      "duration_ms": 98.566126,
+      "operations": 3999,
+      "throughput_ops_per_sec": 40581.893215525175,
+      "element_count": 100,
+      "avg_latency_ms": 0.050607,
+      "max_latency_ms": 0.925176,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-10%_100": {
+      "name": "S3-Concurrent-Lazy-10%",
+      "duration_ms": 38.644343,
+      "operations": 4000,
+      "throughput_ops_per_sec": 103508.03479826271,
+      "element_count": 100,
+      "avg_latency_ms": 0.052084,
+      "max_latency_ms": 0.791509,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-10%_10": {
+      "name": "S3-Concurrent-Lazy-10%",
+      "duration_ms": 222.855193,
+      "operations": 4000,
+      "throughput_ops_per_sec": 17948.874989868422,
+      "element_count": 10,
+      "avg_latency_ms": 0.052487,
+      "max_latency_ms": 0.349425,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-10%_500": {
+      "name": "S3-Concurrent-Lazy-10%",
+      "duration_ms": 40.743939,
+      "operations": 4000,
+      "throughput_ops_per_sec": 98174.11124633776,
+      "element_count": 500,
+      "avg_latency_ms": 0.048989000000000005,
+      "max_latency_ms": 0.404113,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-25%_1": {
+      "name": "S3-Concurrent-Lazy-25%",
+      "duration_ms": 5654.911238000001,
+      "operations": 4000,
+      "throughput_ops_per_sec": 707.349741074751,
+      "element_count": 1,
+      "avg_latency_ms": 0.050520999999999996,
+      "max_latency_ms": 0.5259900000000001,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-50%_100": {
+      "name": "S3-Concurrent-Lazy-50%",
+      "duration_ms": 198.772123,
+      "operations": 4000,
+      "throughput_ops_per_sec": 20123.5461976728,
+      "element_count": 100,
+      "avg_latency_ms": 0.050434,
+      "max_latency_ms": 0.111022,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Lazy-10%_1": {
+      "name": "S3-Concurrent-Lazy-10%",
+      "duration_ms": 2259.555546,
+      "operations": 4000,
+      "throughput_ops_per_sec": 1770.2596455665976,
+      "element_count": 1,
+      "avg_latency_ms": 0.052769,
+      "max_latency_ms": 0.452322,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    }
+  }
+}
