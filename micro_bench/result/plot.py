@@ -113,9 +113,11 @@ def issuer_compute_overheads(
     _colors = setup_plot_style(PLOT_STYLE)
     with open(BENCHMARK_RESULTS_FILE, 'r') as _f:
         _sever_data = json.load(_f)
+    with open('prevoke_issuer_overheads_results.json', 'r') as _f:
+        _prevoke_data = json.load(_f)
 
     # --- Data Extraction and Processing ---
-    def _extract_issuer_data(raw_data):
+    def _extract_issuer_data(raw_data, prefix=""):
         """Extracts and structures issuer overhead data for plotting."""
         _metrics = raw_data['metrics']
         _labels, _counts = set(), set()
@@ -125,7 +127,7 @@ def issuer_compute_overheads(
             if '_' in _key:
                 _parts = _key.split('_')
                 _label, _count_str = '_'.join(_parts[:-1]), _parts[-1]
-                _labels.add(_label)
+                _labels.add(prefix + _label)
                 _counts.add(int(_count_str))
                 _all_durations.append(_value['duration_ms'] / 1000.0)
 
@@ -136,7 +138,9 @@ def issuer_compute_overheads(
         for _label in _sorted_labels:
             _y_values = []
             for _count in _sorted_counts:
-                _metric = _metrics.get(f'{_label}_{_count}')
+                # Handle both prefixed and non-prefixed label matching
+                clean_label = _label.replace(prefix, "")
+                _metric = _metrics.get(f'{clean_label}_{_count}')
                 _y_values.append(_metric['duration_ms'] / 1000.0 if _metric else None)
             _plot_data[_label] = _y_values
 
@@ -154,7 +158,19 @@ def issuer_compute_overheads(
                 _labels.append(str(_count))
         return _labels
 
-    _labels, _counts, _plot_data, _all_durations = _extract_issuer_data(_sever_data)
+    # Extract data from both datasets
+    _sever_labels, _sever_counts, _sever_plot_data, _sever_durations = _extract_issuer_data(_sever_data, "")
+    _prevoke_labels, _prevoke_counts, _prevoke_plot_data, _prevoke_durations = _extract_issuer_data(_prevoke_data, "Prevoke-")
+
+    # Combine data from both datasets
+    _all_labels = list(_sever_labels) + list(_prevoke_labels)
+    _all_counts = sorted(set(_sever_counts + _prevoke_counts))
+    _all_durations = _sever_durations + _prevoke_durations
+    _combined_plot_data = {**_sever_plot_data, **_prevoke_plot_data}
+
+    _labels = sorted(_all_labels)
+    _counts = _all_counts
+    _plot_data = _combined_plot_data
     _x_labels = _format_x_labels(_counts)
     _max_duration = max(_all_durations) if _all_durations else 0
     _y_max = int(np.ceil(_max_duration / 10)) * 10
@@ -168,9 +184,12 @@ def issuer_compute_overheads(
         _valid_points = [(np.log10(c), y) for c, y in zip(_counts, _y_values) if y is not None]
         if _valid_points:
             _x_valid, _y_valid = zip(*_valid_points)
-            _ax.plot(_x_valid, _y_valid, color=_colors[i], marker=_markers[i % len(_markers)], 
-                    linewidth=PLOT_STYLE["linewidth"], markersize=PLOT_STYLE["markersize"], 
-                    label=_label, markerfacecolor='white', markeredgewidth=PLOT_STYLE["marker_edgewidth"])
+            # Use dashed line style for Prevoke data, solid for others
+            _linestyle = '--' if _label.startswith('Prevoke-') else '-'
+            _ax.plot(_x_valid, _y_valid, color=_colors[i], marker=_markers[i % len(_markers)],
+                    linewidth=PLOT_STYLE["linewidth"], markersize=PLOT_STYLE["markersize"],
+                    label=_label, markerfacecolor='white', markeredgewidth=PLOT_STYLE["marker_edgewidth"],
+                    linestyle=_linestyle)
 
     # --- Axes and Legend Configuration ---
     _ax.set_xscale('log')
@@ -184,7 +203,8 @@ def issuer_compute_overheads(
 
     _ax.set_ylim(0, _y_max + 5)
     _ax.set_yticks(np.arange(0, _y_max + 1, 10))
-    _ax.set_yticklabels([str(int(t)) for t in np.arange(0, _y_max + 1, 10)], fontsize=PLOT_STYLE["tick_fontsize"])
+    _ax.set_yticklabels([str(int(t)) for t in np.arange(0, _y_max + 1, 10)], fontsize=10)
+                        #PLOT_STYLE["tick_fontsize"])
     _ax.yaxis.set_major_formatter(ScalarFormatter())
 
     set_ax_border(_ax)
