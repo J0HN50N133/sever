@@ -46,3 +46,7 @@ harness = false
 [[bench]]
 name = "prevoke_issuer_benchmark"
 harness = false
+
+[[bench]]
+name = "prevoke_batch_benchmark"
+harness = false
