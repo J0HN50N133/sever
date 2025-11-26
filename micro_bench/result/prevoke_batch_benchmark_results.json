@@ -1,0 +1,439 @@
+{
+  "experiment_name": "prevoke_secure_batch_performance",
+  "timestamp": "2025-11-26T09:51:24.658341914+00:00",
+  "total_duration_ms": 0.0,
+  "metrics": {
+    "S1-Issuance-Prevoke_100": {
+      "name": "S1-Issuance-Prevoke",
+      "duration_ms": 217.79791,
+      "operations": 10000,
+      "throughput_ops_per_sec": 45914.122867386555,
+      "element_count": 100
+    },
+    "S2-Revoke25%-Prevoke_50": {
+      "name": "S2-Revoke25%-Prevoke",
+      "duration_ms": 337.044342,
+      "operations": 2500,
+      "throughput_ops_per_sec": 7417.421651896474,
+      "element_count": 50
+    },
+    "S2-Revoke25%-Prevoke_1000": {
+      "name": "S2-Revoke25%-Prevoke",
+      "duration_ms": 20.898418,
+      "operations": 2500,
+      "throughput_ops_per_sec": 119626.2798456802,
+      "element_count": 1000
+    },
+    "S2-Revoke50%-Prevoke-Batch_100": {
+      "name": "S2-Revoke50%-Prevoke-Batch",
+      "duration_ms": 336.99010200000004,
+      "operations": 4999,
+      "throughput_ops_per_sec": 14835.018087491957,
+      "element_count": 100,
+      "avg_latency_ms": 0.067392,
+      "max_latency_ms": 0.072147,
+      "min_latency_ms": 0.065667,
+      "blockchain_confirmation_ms": 100.0
+    },
+    "S1-Issuance-Prevoke-Batch_500": {
+      "name": "S1-Issuance-Prevoke-Batch",
+      "duration_ms": 53.860877,
+      "operations": 9985,
+      "throughput_ops_per_sec": 185395.5885787122,
+      "element_count": 500,
+      "avg_latency_ms": 0.005323,
+      "max_latency_ms": 0.006941999999999999,
+      "min_latency_ms": 0.002924,
+      "blockchain_confirmation_ms": 40.0
+    },
+    "S2-Revoke10%-Prevoke-Batch_500": {
+      "name": "S2-Revoke10%-Prevoke-Batch",
+      "duration_ms": 13.520541,
+      "operations": 999,
+      "throughput_ops_per_sec": 73936.5083543079,
+      "element_count": 500,
+      "avg_latency_ms": 0.013517,
+      "max_latency_ms": 0.013674,
+      "min_latency_ms": 0.01336,
+      "blockchain_confirmation_ms": 4.0
+    },
+    "S2-Revoke10%-Prevoke_100": {
+      "name": "S2-Revoke10%-Prevoke",
+      "duration_ms": 66.769878,
+      "operations": 1000,
+      "throughput_ops_per_sec": 14976.81334688076,
+      "element_count": 100
+    },
+    "S2-Revoke50%-Prevoke_500": {
+      "name": "S2-Revoke50%-Prevoke",
+      "duration_ms": 67.84601599999999,
+      "operations": 5000,
+      "throughput_ops_per_sec": 73696.29485687119,
+      "element_count": 500
+    },
+    "S2-Revoke50%-Prevoke-Batch_10": {
+      "name": "S2-Revoke50%-Prevoke-Batch",
+      "duration_ms": 3377.53844,
+      "operations": 4999,
+      "throughput_ops_per_sec": 1480.2624671380474,
+      "element_count": 10,
+      "avg_latency_ms": 0.6754830000000001,
+      "max_latency_ms": 0.791783,
+      "min_latency_ms": 0.653055,
+      "blockchain_confirmation_ms": 1000.0
+    },
+    "S2-Revoke50%-Prevoke-Batch_500": {
+      "name": "S2-Revoke50%-Prevoke-Batch",
+      "duration_ms": 67.820082,
+      "operations": 4998,
+      "throughput_ops_per_sec": 73696.29485687119,
+      "element_count": 500,
+      "avg_latency_ms": 0.013560000000000001,
+      "max_latency_ms": 0.014372000000000001,
+      "min_latency_ms": 0.013330999999999999,
+      "blockchain_confirmation_ms": 20.0
+    },
+    "S2-Revoke10%-Prevoke-Batch_1000": {
+      "name": "S2-Revoke10%-Prevoke-Batch",
+      "duration_ms": 7.110056,
+      "operations": 999,
+      "throughput_ops_per_sec": 140584.03952210984,
+      "element_count": 1000,
+      "avg_latency_ms": 0.007108000000000001,
+      "max_latency_ms": 0.007108000000000001,
+      "min_latency_ms": 0.007108000000000001,
+      "blockchain_confirmation_ms": 2.0
+    },
+    "S2-Revoke10%-Prevoke-Batch_100": {
+      "name": "S2-Revoke10%-Prevoke-Batch",
+      "duration_ms": 66.75806700000001,
+      "operations": 999,
+      "throughput_ops_per_sec": 14976.81334688076,
+      "element_count": 100,
+      "avg_latency_ms": 0.066747,
+      "max_latency_ms": 0.06970900000000001,
+      "min_latency_ms": 0.064786,
+      "blockchain_confirmation_ms": 20.0
+    },
+    "S2-Revoke25%-Prevoke_10": {
+      "name": "S2-Revoke25%-Prevoke",
+      "duration_ms": 1657.024119,
+      "operations": 2500,
+      "throughput_ops_per_sec": 1508.7287935849292,
+      "element_count": 10
+    },
+    "S2-Revoke10%-Prevoke-Batch_10": {
+      "name": "S2-Revoke10%-Prevoke-Batch",
+      "duration_ms": 676.650395,
+      "operations": 999,
+      "throughput_ops_per_sec": 1477.7510773115682,
+      "element_count": 10,
+      "avg_latency_ms": 0.676628,
+      "max_latency_ms": 0.795772,
+      "min_latency_ms": 0.6538619999999999,
+      "blockchain_confirmation_ms": 200.0
+    },
+    "S1-Issuance-Prevoke-Batch_10": {
+      "name": "S1-Issuance-Prevoke-Batch",
+      "duration_ms": 2128.8190870000003,
+      "operations": 9976,
+      "throughput_ops_per_sec": 4686.40367444041,
+      "element_count": 10,
+      "avg_latency_ms": 0.06635200000000001,
+      "max_latency_ms": 0.17274799999999998,
+      "min_latency_ms": 0.0027259999999999997,
+      "blockchain_confirmation_ms": 2000.0
+    },
+    "S2-Revoke10%-Prevoke_10": {
+      "name": "S2-Revoke10%-Prevoke",
+      "duration_ms": 676.703956,
+      "operations": 1000,
+      "throughput_ops_per_sec": 1477.7510773115682,
+      "element_count": 10
+    },
+    "S2-Revoke10%-Prevoke_1": {
+      "name": "S2-Revoke10%-Prevoke",
+      "duration_ms": 6661.2187220000005,
+      "operations": 1000,
+      "throughput_ops_per_sec": 150.1226790072665,
+      "element_count": 1
+    },
+    "S2-Revoke10%-Prevoke_50": {
+      "name": "S2-Revoke10%-Prevoke",
+      "duration_ms": 133.757982,
+      "operations": 1000,
+      "throughput_ops_per_sec": 7476.189346217858,
+      "element_count": 50
+    },
+    "S1-Issuance-Prevoke-Batch_1000": {
+      "name": "S1-Issuance-Prevoke-Batch",
+      "duration_ms": 42.416959,
+      "operations": 9986,
+      "throughput_ops_per_sec": 235426.2831927222,
+      "element_count": 1000,
+      "avg_latency_ms": 0.0041389999999999995,
+      "max_latency_ms": 0.006978,
+      "min_latency_ms": 0.001063,
+      "blockchain_confirmation_ms": 20.0
+    },
+    "S2-Revoke25%-Prevoke_100": {
+      "name": "S2-Revoke25%-Prevoke",
+      "duration_ms": 170.11816499999998,
+      "operations": 2500,
+      "throughput_ops_per_sec": 14695.66756730535,
+      "element_count": 100
+    },
+    "S1-Issuance-Prevoke-Batch_50": {
+      "name": "S1-Issuance-Prevoke-Batch",
+      "duration_ms": 419.980229,
+      "operations": 9978,
+      "throughput_ops_per_sec": 23758.797475835898,
+      "element_count": 50,
+      "avg_latency_ms": 0.023649999999999997,
+      "max_latency_ms": 0.045425,
+      "min_latency_ms": 0.005366,
+      "blockchain_confirmation_ms": 400.0
+    },
+    "S1-Issuance-Prevoke_1": {
+      "name": "S1-Issuance-Prevoke",
+      "duration_ms": 21229.904244,
+      "operations": 10000,
+      "throughput_ops_per_sec": 471.0336836694024,
+      "element_count": 1
+    },
+    "S2-Revoke25%-Prevoke_500": {
+      "name": "S2-Revoke25%-Prevoke",
+      "duration_ms": 34.869681,
+      "operations": 2500,
+      "throughput_ops_per_sec": 71695.52253718639,
+      "element_count": 500
+    },
+    "S1-Issuance-Prevoke_10": {
+      "name": "S1-Issuance-Prevoke",
+      "duration_ms": 2133.8324000000002,
+      "operations": 10000,
+      "throughput_ops_per_sec": 4686.40367444041,
+      "element_count": 10
+    },
+    "S2-Revoke10%-Prevoke-Batch_50": {
+      "name": "S2-Revoke10%-Prevoke-Batch",
+      "duration_ms": 133.73963799999999,
+      "operations": 999,
+      "throughput_ops_per_sec": 7476.189346217858,
+      "element_count": 50,
+      "avg_latency_ms": 0.133734,
+      "max_latency_ms": 0.138011,
+      "min_latency_ms": 0.12897399999999998,
+      "blockchain_confirmation_ms": 40.0
+    },
+    "S2-Revoke25%-Prevoke-Batch_500": {
+      "name": "S2-Revoke25%-Prevoke-Batch",
+      "duration_ms": 34.856142,
+      "operations": 2499,
+      "throughput_ops_per_sec": 71695.52253718639,
+      "element_count": 500,
+      "avg_latency_ms": 0.013937999999999999,
+      "max_latency_ms": 0.014687,
+      "min_latency_ms": 0.013533,
+      "blockchain_confirmation_ms": 10.0
+    },
+    "S2-Revoke50%-Prevoke_1": {
+      "name": "S2-Revoke50%-Prevoke",
+      "duration_ms": 33350.886231,
+      "operations": 5000,
+      "throughput_ops_per_sec": 149.9210535326779,
+      "element_count": 1
+    },
+    "S1-Issuance-Prevoke_1000": {
+      "name": "S1-Issuance-Prevoke",
+      "duration_ms": 42.476141000000005,
+      "operations": 10000,
+      "throughput_ops_per_sec": 235426.2831927222,
+      "element_count": 1000
+    },
+    "S2-Revoke50%-Prevoke-Batch_1": {
+      "name": "S2-Revoke50%-Prevoke-Batch",
+      "duration_ms": 33348.890794,
+      "operations": 4999,
+      "throughput_ops_per_sec": 149.9210535326779,
+      "element_count": 1,
+      "avg_latency_ms": 6.669577,
+      "max_latency_ms": 7.414449,
+      "min_latency_ms": 6.414911,
+      "blockchain_confirmation_ms": 10000.0
+    },
+    "S2-Revoke25%-Prevoke-Batch_50": {
+      "name": "S2-Revoke25%-Prevoke-Batch",
+      "duration_ms": 337.003129,
+      "operations": 2499,
+      "throughput_ops_per_sec": 7417.421651896474,
+      "element_count": 50,
+      "avg_latency_ms": 0.134795,
+      "max_latency_ms": 0.154429,
+      "min_latency_ms": 0.129287,
+      "blockchain_confirmation_ms": 100.0
+    },
+    "S2-Revoke50%-Prevoke-Batch_1000": {
+      "name": "S2-Revoke50%-Prevoke-Batch",
+      "duration_ms": 34.644716,
+      "operations": 4995,
+      "throughput_ops_per_sec": 144188.23092979434,
+      "element_count": 1000,
+      "avg_latency_ms": 0.006926,
+      "max_latency_ms": 0.007021,
+      "min_latency_ms": 0.006803,
+      "blockchain_confirmation_ms": 10.0
+    },
+    "S2-Revoke50%-Prevoke_50": {
+      "name": "S2-Revoke50%-Prevoke",
+      "duration_ms": 666.478887,
+      "operations": 5000,
+      "throughput_ops_per_sec": 7502.113116450454,
+      "element_count": 50
+    },
+    "S2-Revoke25%-Prevoke-Batch_10": {
+      "name": "S2-Revoke25%-Prevoke-Batch",
+      "duration_ms": 1656.8985409999998,
+      "operations": 2499,
+      "throughput_ops_per_sec": 1508.7287935849292,
+      "element_count": 10,
+      "avg_latency_ms": 0.662735,
+      "max_latency_ms": 0.68977,
+      "min_latency_ms": 0.6434340000000001,
+      "blockchain_confirmation_ms": 500.0
+    },
+    "S2-Revoke25%-Prevoke-Batch_100": {
+      "name": "S2-Revoke25%-Prevoke-Batch",
+      "duration_ms": 170.091992,
+      "operations": 2499,
+      "throughput_ops_per_sec": 14695.66756730535,
+      "element_count": 100,
+      "avg_latency_ms": 0.068027,
+      "max_latency_ms": 0.069547,
+      "min_latency_ms": 0.06637,
+      "blockchain_confirmation_ms": 50.0
+    },
+    "S2-Revoke50%-Prevoke_10": {
+      "name": "S2-Revoke50%-Prevoke",
+      "duration_ms": 3377.779354,
+      "operations": 5000,
+      "throughput_ops_per_sec": 1480.2624671380474,
+      "element_count": 10
+    },
+    "S1-Issuance-Prevoke-Batch_1": {
+      "name": "S1-Issuance-Prevoke-Batch",
+      "duration_ms": 21186.767747,
+      "operations": 9979,
+      "throughput_ops_per_sec": 471.0336836694024,
+      "element_count": 1,
+      "avg_latency_ms": 0.7793760000000001,
+      "max_latency_ms": 1.885141,
+      "min_latency_ms": 0.015702999999999998,
+      "blockchain_confirmation_ms": 20000.0
+    },
+    "S2-Revoke25%-Prevoke_1": {
+      "name": "S2-Revoke25%-Prevoke",
+      "duration_ms": 16705.866164,
+      "operations": 2500,
+      "throughput_ops_per_sec": 149.64803234131787,
+      "element_count": 1
+    },
+    "S2-Revoke50%-Prevoke-Batch_50": {
+      "name": "S2-Revoke50%-Prevoke-Batch",
+      "duration_ms": 666.404491,
+      "operations": 4999,
+      "throughput_ops_per_sec": 7502.113116450454,
+      "element_count": 50,
+      "avg_latency_ms": 0.133275,
+      "max_latency_ms": 0.13941800000000001,
+      "min_latency_ms": 0.130741,
+      "blockchain_confirmation_ms": 200.0
+    },
+    "S2-Revoke10%-Prevoke_500": {
+      "name": "S2-Revoke10%-Prevoke",
+      "duration_ms": 13.525117999999999,
+      "operations": 1000,
+      "throughput_ops_per_sec": 73936.5083543079,
+      "element_count": 500
+    },
+    "S2-Revoke10%-Prevoke-Batch_1": {
+      "name": "S2-Revoke10%-Prevoke-Batch",
+      "duration_ms": 6660.807302,
+      "operations": 999,
+      "throughput_ops_per_sec": 150.1226790072665,
+      "element_count": 1,
+      "avg_latency_ms": 6.660597,
+      "max_latency_ms": 7.136228,
+      "min_latency_ms": 6.409954,
+      "blockchain_confirmation_ms": 2000.0
+    },
+    "S2-Revoke10%-Prevoke_1000": {
+      "name": "S2-Revoke10%-Prevoke",
+      "duration_ms": 7.113183,
+      "operations": 999,
+      "throughput_ops_per_sec": 140584.03952210984,
+      "element_count": 1000
+    },
+    "S2-Revoke50%-Prevoke_100": {
+      "name": "S2-Revoke50%-Prevoke",
+      "duration_ms": 337.040371,
+      "operations": 5000,
+      "throughput_ops_per_sec": 14835.018087491957,
+      "element_count": 100
+    },
+    "S1-Issuance-Prevoke_50": {
+      "name": "S1-Issuance-Prevoke",
+      "duration_ms": 420.89672299999995,
+      "operations": 10000,
+      "throughput_ops_per_sec": 23758.797475835898,
+      "element_count": 50
+    },
+    "S1-Issuance-Prevoke_500": {
+      "name": "S1-Issuance-Prevoke",
+      "duration_ms": 53.938716,
+      "operations": 10000,
+      "throughput_ops_per_sec": 185395.5885787122,
+      "element_count": 500
+    },
+    "S2-Revoke25%-Prevoke-Batch_1000": {
+      "name": "S2-Revoke25%-Prevoke-Batch",
+      "duration_ms": 20.888086,
+      "operations": 2498,
+      "throughput_ops_per_sec": 119626.2798456802,
+      "element_count": 1000,
+      "avg_latency_ms": 0.009205999999999999,
+      "max_latency_ms": 0.013472999999999999,
+      "min_latency_ms": 0.007023000000000001,
+      "blockchain_confirmation_ms": 6.0
+    },
+    "S2-Revoke50%-Prevoke_1000": {
+      "name": "S2-Revoke50%-Prevoke",
+      "duration_ms": 34.676894,
+      "operations": 5000,
+      "throughput_ops_per_sec": 144188.23092979434,
+      "element_count": 1000
+    },
+    "S2-Revoke25%-Prevoke-Batch_1": {
+      "name": "S2-Revoke25%-Prevoke-Batch",
+      "duration_ms": 16704.851023,
+      "operations": 2499,
+      "throughput_ops_per_sec": 149.64803234131787,
+      "element_count": 1,
+      "avg_latency_ms": 6.6817329999999995,
+      "max_latency_ms": 8.327309,
+      "min_latency_ms": 6.417606999999999,
+      "blockchain_confirmation_ms": 5000.0
+    },
+    "S1-Issuance-Prevoke-Batch_100": {
+      "name": "S1-Issuance-Prevoke-Batch",
+      "duration_ms": 217.387542,
+      "operations": 9981,
+      "throughput_ops_per_sec": 45914.122867386555,
+      "element_count": 100,
+      "avg_latency_ms": 0.015531000000000001,
+      "max_latency_ms": 0.043095,
+      "min_latency_ms": 0.001772,
+      "blockchain_confirmation_ms": 200.0
+    }
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "experiment_name": "prevoke_secure_concurrent_verification",
+  "timestamp": "2025-11-26T09:51:24.658348883+00:00",
+  "total_duration_ms": 0.0,
+  "metrics": {
+    "S3-Concurrent-Prevoke-25%-Verification_50": {
+      "name": "S3-Concurrent-Prevoke-25%-Verification",
+      "duration_ms": 378.050538,
+      "operations": 20236,
+      "throughput_ops_per_sec": 53529.065859944836,
+      "element_count": 50,
+      "avg_latency_ms": 0.074725,
+      "max_latency_ms": 0.12876200000000002,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-50%-Verification_1000": {
+      "name": "S3-Concurrent-Prevoke-50%-Verification",
+      "duration_ms": 66.966887,
+      "operations": 3583,
+      "throughput_ops_per_sec": 53518.54434952889,
+      "element_count": 1000,
+      "avg_latency_ms": 0.074739,
+      "max_latency_ms": 0.117984,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-10%-Verification_1": {
+      "name": "S3-Concurrent-Prevoke-10%-Verification",
+      "duration_ms": 6816.907249,
+      "operations": 364013,
+      "throughput_ops_per_sec": 53398.57245128761,
+      "element_count": 1,
+      "avg_latency_ms": 0.07490799999999999,
+      "max_latency_ms": 0.12063,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-25%-Verification_10": {
+      "name": "S3-Concurrent-Prevoke-25%-Verification",
+      "duration_ms": 1765.510602,
+      "operations": 94521,
+      "throughput_ops_per_sec": 53537.70017914669,
+      "element_count": 10,
+      "avg_latency_ms": 0.074713,
+      "max_latency_ms": 0.12295500000000001,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-50%-Verification_10": {
+      "name": "S3-Concurrent-Prevoke-50%-Verification",
+      "duration_ms": 3458.2930579999997,
+      "operations": 189889,
+      "throughput_ops_per_sec": 54908.513249219555,
+      "element_count": 10,
+      "avg_latency_ms": 0.073094,
+      "max_latency_ms": 0.131863,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-10%-Verification_100": {
+      "name": "S3-Concurrent-Prevoke-10%-Verification",
+      "duration_ms": 107.357993,
+      "operations": 5896,
+      "throughput_ops_per_sec": 54920.24874945247,
+      "element_count": 100,
+      "avg_latency_ms": 0.072958,
+      "max_latency_ms": 0.106047,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-10%-Verification_50": {
+      "name": "S3-Concurrent-Prevoke-10%-Verification",
+      "duration_ms": 175.739902,
+      "operations": 9722,
+      "throughput_ops_per_sec": 55320.82232413908,
+      "element_count": 50,
+      "avg_latency_ms": 0.07250999999999999,
+      "max_latency_ms": 0.12238500000000001,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-10%-Verification_500": {
+      "name": "S3-Concurrent-Prevoke-10%-Verification",
+      "duration_ms": 43.197196,
+      "operations": 2312,
+      "throughput_ops_per_sec": 53538.983150749475,
+      "element_count": 500,
+      "avg_latency_ms": 0.074711,
+      "max_latency_ms": 0.12000000000000001,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-10%-Verification_10": {
+      "name": "S3-Concurrent-Prevoke-10%-Verification",
+      "duration_ms": 731.54228,
+      "operations": 41896,
+      "throughput_ops_per_sec": 57271.872788754714,
+      "element_count": 10,
+      "avg_latency_ms": 0.070634,
+      "max_latency_ms": 0.122732,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-25%-Verification_100": {
+      "name": "S3-Concurrent-Prevoke-25%-Verification",
+      "duration_ms": 203.221075,
+      "operations": 10883,
+      "throughput_ops_per_sec": 53553.487361196814,
+      "element_count": 100,
+      "avg_latency_ms": 0.074691,
+      "max_latency_ms": 0.117621,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-25%-Verification_500": {
+      "name": "S3-Concurrent-Prevoke-25%-Verification",
+      "duration_ms": 78.211782,
+      "operations": 4275,
+      "throughput_ops_per_sec": 54660.43408382914,
+      "element_count": 500,
+      "avg_latency_ms": 0.073275,
+      "max_latency_ms": 0.181086,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-10%-Verification_1000": {
+      "name": "S3-Concurrent-Prevoke-10%-Verification",
+      "duration_ms": 39.187028,
+      "operations": 2099,
+      "throughput_ops_per_sec": 53575.81605754041,
+      "element_count": 1000,
+      "avg_latency_ms": 0.07465999999999999,
+      "max_latency_ms": 0.106168,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-50%-Verification_50": {
+      "name": "S3-Concurrent-Prevoke-50%-Verification",
+      "duration_ms": 723.218553,
+      "operations": 38587,
+      "throughput_ops_per_sec": 53355.725649511536,
+      "element_count": 50,
+      "avg_latency_ms": 0.07496900000000001,
+      "max_latency_ms": 0.128472,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-50%-Verification_1": {
+      "name": "S3-Concurrent-Prevoke-50%-Verification",
+      "duration_ms": 34036.864101,
+      "operations": 1821044,
+      "throughput_ops_per_sec": 53502.116914441314,
+      "element_count": 1,
+      "avg_latency_ms": 0.074763,
+      "max_latency_ms": 0.12270599999999998,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-50%-Verification_500": {
+      "name": "S3-Concurrent-Prevoke-50%-Verification",
+      "duration_ms": 101.96702,
+      "operations": 5452,
+      "throughput_ops_per_sec": 53469.17680760695,
+      "element_count": 500,
+      "avg_latency_ms": 0.074809,
+      "max_latency_ms": 0.132343,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-50%-Verification_100": {
+      "name": "S3-Concurrent-Prevoke-50%-Verification",
+      "duration_ms": 386.66098900000003,
+      "operations": 20668,
+      "throughput_ops_per_sec": 53454.9960636898,
+      "element_count": 100,
+      "avg_latency_ms": 0.07482799999999999,
+      "max_latency_ms": 0.12186899999999999,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-25%-Verification_1": {
+      "name": "S3-Concurrent-Prevoke-25%-Verification",
+      "duration_ms": 17183.336179,
+      "operations": 920794,
+      "throughput_ops_per_sec": 53586.489919433894,
+      "element_count": 1,
+      "avg_latency_ms": 0.074645,
+      "max_latency_ms": 0.115709,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    },
+    "S3-Concurrent-Prevoke-25%-Verification_1000": {
+      "name": "S3-Concurrent-Prevoke-25%-Verification",
+      "duration_ms": 50.746416,
+      "operations": 2713,
+      "throughput_ops_per_sec": 53467.22213749981,
+      "element_count": 1000,
+      "avg_latency_ms": 0.074812,
+      "max_latency_ms": 0.12045499999999999,
+      "min_latency_ms": 0.0,
+      "blockchain_confirmation_ms": 0.0
+    }
+  }
+}
