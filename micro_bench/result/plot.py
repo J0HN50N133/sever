@@ -109,8 +109,8 @@ def issuer_compute_overheads(
 ):
     # --- Style and Data Loading ---
     _PLOT_STYLE = dict(PLOT_STYLE)
-    _PLOT_STYLE["legend_fontsize"] = 18
-    _PLOT_STYLE['label_fontsize'] = 18
+    _PLOT_STYLE["legend_fontsize"] = 17
+    _PLOT_STYLE['label_fontsize'] = 24
     _colors = setup_plot_style(_PLOT_STYLE)
     with open(BENCHMARK_RESULTS_FILE, 'r') as _f:
         _sever_data = json.load(_f)
@@ -160,7 +160,7 @@ def issuer_compute_overheads(
         return _labels
 
     # Extract data from both datasets
-    _sever_labels, _sever_counts, _sever_plot_data, _sever_durations = _extract_issuer_data(_sever_data, "")
+    _sever_labels, _sever_counts, _sever_plot_data, _sever_durations = _extract_issuer_data(_sever_data, "Sever-")
     _prevoke_labels, _prevoke_counts, _prevoke_plot_data, _prevoke_durations = _extract_issuer_data(_prevoke_data, "Prevoke-")
 
     # Combine data from both datasets
@@ -203,8 +203,8 @@ def issuer_compute_overheads(
     _ax.xaxis.set_minor_formatter(plt.NullFormatter())
     _ax.tick_params(axis='x', which='minor', bottom=False)
 
-    _ax.set_xlabel('Total number of clients', fontsize=_PLOT_STYLE["label_fontsize"])
-    _ax.set_ylabel('Overheads log scale(seconds)', fontsize=_PLOT_STYLE["label_fontsize"]) # Update label
+    _ax.set_xlabel('Number of clients', fontsize=_PLOT_STYLE["label_fontsize"])
+    _ax.set_ylabel('Computation time(s)', fontsize=_PLOT_STYLE["label_fontsize"]) # Update label
 
     # Set y-limits based on transformed data
     # Ensure lower limit is not too small if min_original_duration is 0
@@ -438,35 +438,40 @@ def ___(mo):
 @app.cell
 def _(PLOT_STYLE, np, plt, save_fig, set_ax_border, setup_plot_style):
     # --- Style Setup ---
-    _colors = setup_plot_style(PLOT_STYLE)
+    _PLOT_STYLE = dict(PLOT_STYLE)
+    _PLOT_STYLE['x_tick_fontsize'] = 18
+    _colors = setup_plot_style(_PLOT_STYLE)
 
     # --- Data ---
-    _OPERATIONS = ['getAccumulator', 'updateAccumulator']
-    _THROUGHPUT_DATA = [528.3, 264.3]  # TPS
-    _LATENCY_DATA = [10, 60]  # ms
+    _OPERATIONS = ['Sever.GetAccumulator', 'Sever.UpdateAccumulator', 'Prevoke.Revoke', 'Prevoke.VerifyPhase1', 'Prevoke.Issue']
+    _THROUGHPUT_DATA = [528.3, 264.3, 112, 200, 108]  # TPS
+    _LATENCY_DATA = [10, 60, 250, 20, 270]  # ms
 
     # --- Plotting ---
-    _fig, _ax1 = plt.subplots(figsize=PLOT_STYLE["figsize"])
+    _fig, _ax1 = plt.subplots(figsize=_PLOT_STYLE["figsize"])
     _x_pos = np.arange(len(_OPERATIONS))
     _bar_width = 0.35
 
     # Throughput bars (left y-axis)
     _ax1.bar(_x_pos - _bar_width / 2, _THROUGHPUT_DATA, _bar_width, label='Throughput (TPS)', color=_colors[0], alpha=0.8)
-    _ax1.set_ylabel('Throughput (TPS)', fontsize=PLOT_STYLE["label_fontsize"])
-    _ax1.tick_params(axis='y', labelsize=PLOT_STYLE["tick_fontsize"])
+    _ax1.set_ylabel('Throughput (TPS)', fontsize=_PLOT_STYLE["label_fontsize"])
+    _ax1.tick_params(axis='y', labelsize=_PLOT_STYLE["tick_fontsize"])
     _ax1.set_ylim(0, max(_THROUGHPUT_DATA) * 1.2)
 
     # Latency bars (right y-axis)
     _ax2 = _ax1.twinx()
     _ax2.bar(_x_pos + _bar_width / 2, _LATENCY_DATA, _bar_width, label='Average Latency (ms)', color=_colors[1], alpha=0.8)
-    _ax2.set_ylabel('Average latency (ms)', fontsize=PLOT_STYLE["label_fontsize"])
+    _ax2.set_ylabel('Average latency (ms)', fontsize=_PLOT_STYLE["label_fontsize"])
     _ax2.tick_params(axis='y', labelsize=PLOT_STYLE["tick_fontsize"])
     _ax2.set_ylim(0, max(_LATENCY_DATA) * 1.2)
 
     # --- Axes and Legend ---
-    _ax1.set_xticks(_x_pos)
-    _ax1.set_xticklabels(_OPERATIONS, fontsize=PLOT_STYLE["tick_fontsize"])
-    _ax1.set_xlabel('Operations', fontsize=PLOT_STYLE["label_fontsize"])
+    # The x-tick positions are shifted to the right edge of the latency bars.
+    # Since the horizontal alignment (`ha`) of the labels is 'right', this change
+    # results in the labels being drawn directly under the latency bars.
+    _ax1.set_xticks(_x_pos + _bar_width)
+    _ax1.set_xticklabels([x.replace('.', '.\n') for x in _OPERATIONS], fontsize=_PLOT_STYLE["x_tick_fontsize"], rotation=15, ha='right')
+    _ax1.set_xlabel('Operations', fontsize=_PLOT_STYLE["label_fontsize"])
 
     set_ax_border(_ax1)
     _ax1.grid(False)
@@ -475,7 +480,8 @@ def _(PLOT_STYLE, np, plt, save_fig, set_ax_border, setup_plot_style):
     # Combine legends from both axes
     _lines1, _labels1 = _ax1.get_legend_handles_labels()
     _lines2, _labels2 = _ax2.get_legend_handles_labels()
-    _ax1.legend(_lines1 + _lines2, _labels1 + _labels2, loc='upper center', fontsize=22, frameon=False)
+    _ax1.legend(_lines1 + _lines2, _labels1 + _labels2, loc='upper center', fontsize=20, frameon=False)
+    # _ax1.legend(_lines1 + _lines2, _labels1 + _labels2, loc='best', fontsize=20, frameon=False)
 
     plt.tight_layout()
     save_fig(plt, 'smart_contract')
