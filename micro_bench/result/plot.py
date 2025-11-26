@@ -206,7 +206,7 @@ def issuer_compute_overheads(
     _ax.tick_params(axis='x', which='minor', bottom=False)
 
     _ax.set_xlabel('Number of clients - log scale', fontsize=_PLOT_STYLE["label_fontsize"])
-    _ax.set_ylabel('Computation time - log scale(s)', fontsize=_PLOT_STYLE["label_fontsize"]) # Update label
+    _ax.set_ylabel(r'Computation time - $\log_e$ scale(s)', fontsize=_PLOT_STYLE["label_fontsize"]) # Update label
 
     # Set y-limits based on transformed data
     # Ensure lower limit is not too small if min_original_duration is 0
@@ -231,7 +231,7 @@ def issuer_compute_overheads(
         else:
             return f"{int(original_y)}"
 
-    # _ax.yaxis.set_major_formatter(FuncFormatter(log1p_formatter))
+    _ax.yaxis.set_major_formatter(FuncFormatter(log1p_formatter))
     _ax.tick_params(axis='y', labelsize=_PLOT_STYLE["tick_fontsize"])
 
     set_ax_border(_ax)
@@ -323,13 +323,14 @@ def _(
     set_ax_border(_ax)
     _ax.set_xscale('log')
     _ax.set_yscale('log')
-    _ax.set_xlabel('Batch size', fontsize=PLOT_STYLE["label_fontsize"])
-    _ax.set_ylabel('Throughput (tps)', fontsize=PLOT_STYLE["label_fontsize"])
+    _ax.set_xlabel('Batch size - log scale', fontsize=PLOT_STYLE["label_fontsize"])
+    _ax.set_ylabel('Throughput - log scale(tps)', fontsize=PLOT_STYLE["label_fontsize"])
     _ax.grid(True, linestyle='--', alpha=PLOT_STYLE["grid_alpha"])
 
     _sorted_batch_sizes = sorted(list(_all_batch_sizes))
     _ax.set_xticks(_sorted_batch_sizes)
     _ax.set_xticklabels([str(bs) for bs in _sorted_batch_sizes], fontsize=PLOT_STYLE["tick_fontsize"])
+    _ax.set_yticks([1e2,1e3,1e4])
     _ax.tick_params(axis='y', labelsize=PLOT_STYLE["tick_fontsize"])
 
     _ax.legend(loc='best', fontsize=PLOT_STYLE["legend_fontsize"], frameon=True, fancybox=True, shadow=True, ncol=1)
@@ -414,7 +415,7 @@ def _(
     _ax.set_xticks(_sorted_batch_sizes)
     _ax.set_xticklabels([str(bs) for bs in _sorted_batch_sizes], fontsize=PLOT_STYLE["tick_fontsize"])
 
-    _ax.set_xlabel('Batch size', fontsize=PLOT_STYLE["label_fontsize"])
+    _ax.set_xlabel('Batch size - log scale', fontsize=PLOT_STYLE["label_fontsize"])
     _ax.set_ylabel('Latency (ms)', fontsize=PLOT_STYLE["label_fontsize"])
     _ax.grid(True, linestyle='--', alpha=PLOT_STYLE["grid_alpha"])
     _ax.tick_params(axis='y', labelsize=PLOT_STYLE["tick_fontsize"])
