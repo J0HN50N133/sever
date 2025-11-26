@@ -14,9 +14,15 @@ use std::time::{Duration, Instant};
 
 use crate::prevoke_batch_common::{BatchProcessor, PrevokeIssuer, VerificationClient};
 
-const TOTAL_CREDENTIALS: usize = 10_000;
-const BLOCKCHAIN_TPS: u64 = 500;
-const BATCH_SIZES: &[usize] = &[1, 10, 50, 100, 500, 1000];
+const BLOCKCHAIN_TPS: u64 = 200;
+const BATCH_SIZES: &[(usize, usize)] = &[
+    (1, 10_000),
+    (10, 10_000),
+    (50, 10_000),
+    (100, 100_000),
+    (500, 100_000),
+    (1000, 100_000),
+];
 const REVOCATION_PERCENTAGES: &[f64] = &[0.10, 0.25, 0.50];
 
 /// Scenario S1: Issuance Testing - Add credentials in batches
@@ -24,7 +30,7 @@ fn run_s1_issuance_tests(results: &mut ExperimentResults) {
     info!("Starting S1: Issuance Testing for Prevoke");
     debug!("Testing batch sizes: {:?}", BATCH_SIZES);
 
-    for &batch_size in BATCH_SIZES {
+    for &(batch_size, TOTAL_CREDENTIALS) in BATCH_SIZES {
         info!("Testing batch size: {}", batch_size);
 
         let elements = generate_test_elements(TOTAL_CREDENTIALS);
@@ -89,15 +95,15 @@ fn run_s2_revocation_tests(results: &mut ExperimentResults) {
     info!("Starting S2: Revocation Testing for Prevoke");
 
     for &revocation_percentage in REVOCATION_PERCENTAGES {
-        let revocation_count = (TOTAL_CREDENTIALS as f64 * revocation_percentage) as usize;
-        let label_suffix = format!("{}%", (revocation_percentage * 100.0) as usize);
+        for &(batch_size, TOTAL_CREDENTIALS) in BATCH_SIZES {
+            let revocation_count = (TOTAL_CREDENTIALS as f64 * revocation_percentage) as usize;
+            let label_suffix = format!("{}%", (revocation_percentage * 100.0) as usize);
 
-        info!(
-            "Testing revocation: {} ({})",
-            label_suffix, revocation_count
-        );
+            info!(
+                "Testing revocation: {} ({})",
+                label_suffix, revocation_count
+            );
 
-        for &batch_size in BATCH_SIZES {
             let elements = generate_test_elements(TOTAL_CREDENTIALS);
             let mut issuer = PrevokeIssuer::new();
             let indices: Vec<usize> = (0..TOTAL_CREDENTIALS).collect();
@@ -166,10 +172,10 @@ fn run_s3_concurrent_verification_tests(results: &mut ExperimentResults) {
     const VERIFICATION_INTERVAL_MS: u64 = 10;
 
     for &revocation_percentage in REVOCATION_PERCENTAGES {
-        let revocation_count = (TOTAL_CREDENTIALS as f64 * revocation_percentage) as usize;
-        let label_suffix = format!("{}%", (revocation_percentage * 100.0) as usize);
+        for &(batch_size, TOTAL_CREDENTIALS) in BATCH_SIZES {
+            let revocation_count = (TOTAL_CREDENTIALS as f64 * revocation_percentage) as usize;
+            let label_suffix = format!("{}%", (revocation_percentage * 100.0) as usize);
 
-        for &batch_size in BATCH_SIZES {
             let elements = generate_test_elements(TOTAL_CREDENTIALS);
             let mut issuer = PrevokeIssuer::new();
             issuer.add_elements(&elements);
