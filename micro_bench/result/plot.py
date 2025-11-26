@@ -19,7 +19,7 @@ def common():
     import matplotlib.pyplot as plt
     import numpy as np
     import seaborn as sns
-    from matplotlib.ticker import ScalarFormatter
+    from matplotlib.ticker import ScalarFormatter, NullFormatter
 
     # --- File Paths ---
     BENCHMARK_RESULTS_FILE = 'benchmark_results.json'
@@ -45,6 +45,7 @@ def common():
     return (
         BATCH_BENCHMARK_RESULTS_FILE,
         BENCHMARK_RESULTS_FILE,
+        NullFormatter,
         PLOT_STYLE,
         VERIFICATION_RESULTS_FILE,
         json,
@@ -99,6 +100,7 @@ def ___(mo):
 @app.cell
 def issuer_compute_overheads(
     BENCHMARK_RESULTS_FILE,
+    NullFormatter,
     PLOT_STYLE,
     json,
     np,
@@ -110,7 +112,7 @@ def issuer_compute_overheads(
     # --- Style and Data Loading ---
     _PLOT_STYLE = dict(PLOT_STYLE)
     _PLOT_STYLE["legend_fontsize"] = 17
-    _PLOT_STYLE['label_fontsize'] = 24
+    _PLOT_STYLE['label_fontsize'] = 23
     _colors = setup_plot_style(_PLOT_STYLE)
     with open(BENCHMARK_RESULTS_FILE, 'r') as _f:
         _sever_data = json.load(_f)
@@ -200,11 +202,11 @@ def issuer_compute_overheads(
 
     _ax.set_xticks(_counts)
     _ax.set_xticklabels(_x_labels, fontsize=_PLOT_STYLE["tick_fontsize"])
-    _ax.xaxis.set_minor_formatter(plt.NullFormatter())
+    _ax.xaxis.set_minor_formatter(NullFormatter())
     _ax.tick_params(axis='x', which='minor', bottom=False)
 
-    _ax.set_xlabel('Number of clients', fontsize=_PLOT_STYLE["label_fontsize"])
-    _ax.set_ylabel('Computation time(s)', fontsize=_PLOT_STYLE["label_fontsize"]) # Update label
+    _ax.set_xlabel('Number of clients - log scale', fontsize=_PLOT_STYLE["label_fontsize"])
+    _ax.set_ylabel('Computation time - log scale(s)', fontsize=_PLOT_STYLE["label_fontsize"]) # Update label
 
     # Set y-limits based on transformed data
     # Ensure lower limit is not too small if min_original_duration is 0
@@ -229,7 +231,7 @@ def issuer_compute_overheads(
         else:
             return f"{int(original_y)}"
 
-    _ax.yaxis.set_major_formatter(FuncFormatter(log1p_formatter))
+    # _ax.yaxis.set_major_formatter(FuncFormatter(log1p_formatter))
     _ax.tick_params(axis='y', labelsize=_PLOT_STYLE["tick_fontsize"])
 
     set_ax_border(_ax)
@@ -383,13 +385,13 @@ def _(
 
     # --- Plotting Configuration ---
     _PLOT_CONFIG = {
-        'Auth.10% Revoke(S3)': {'data': _verification_latency.get('S3-Concurrent-10%-Verification', {}), 'color': _colors[1], 'marker': 'o', 'linestyle': '--'},
-        'Auth.25% Revoke(S3)': {'data': _verification_latency.get('S3-Concurrent-25%-Verification', {}), 'color': _colors[2], 'marker': 's', 'linestyle': '--'},
-        'Auth.50% Revoke(S3)': {'data': _verification_latency.get('S3-Concurrent-50%-Verification', {}), 'color': _colors[3], 'marker': '^', 'linestyle': '--'},
+        'Auth.10% Rev.(S3)': {'data': _verification_latency.get('S3-Concurrent-10%-Verification', {}), 'color': _colors[1], 'marker': 'o', 'linestyle': '--'},
+        'Auth.25% Rev.(S3)': {'data': _verification_latency.get('S3-Concurrent-25%-Verification', {}), 'color': _colors[2], 'marker': 's', 'linestyle': '--'},
+        'Auth.50% Rev.(S3)': {'data': _verification_latency.get('S3-Concurrent-50%-Verification', {}), 'color': _colors[3], 'marker': '^', 'linestyle': '--'},
         'Issuance (S1)': {'data': _batch_latency.get('S1-Issuance-Batch', {}), 'color': _colors[0], 'marker': 'D', 'linestyle': '-'},
-        'Revocation 10% (S2)': {'data': _batch_latency.get('S2-Revoke10%-Batch', {}), 'color': _colors[4], 'marker': 'v', 'linestyle': '-'},
-        'Revocation 25% (S2)': {'data': _batch_latency.get('S2-Revoke25%-Batch', {}), 'color': _colors[5], 'marker': '<', 'linestyle': '-'},
-        'Revocation 50% (S2)': {'data': _batch_latency.get('S2-Revoke50%-Batch', {}), 'color': _colors[6], 'marker': '>', 'linestyle': '-'},
+        'Rev. 10% (S2)': {'data': _batch_latency.get('S2-Revoke10%-Batch', {}), 'color': _colors[4], 'marker': 'v', 'linestyle': '-'},
+        'Rev. 25% (S2)': {'data': _batch_latency.get('S2-Revoke25%-Batch', {}), 'color': _colors[5], 'marker': '<', 'linestyle': '-'},
+        'Rev. 50% (S2)': {'data': _batch_latency.get('S2-Revoke50%-Batch', {}), 'color': _colors[6], 'marker': '>', 'linestyle': '-'},
     }
 
     # --- Plotting ---
@@ -413,7 +415,7 @@ def _(
     _ax.set_xticklabels([str(bs) for bs in _sorted_batch_sizes], fontsize=PLOT_STYLE["tick_fontsize"])
 
     _ax.set_xlabel('Batch size', fontsize=PLOT_STYLE["label_fontsize"])
-    _ax.set_ylabel('Average latency (ms)', fontsize=PLOT_STYLE["label_fontsize"])
+    _ax.set_ylabel('Latency (ms)', fontsize=PLOT_STYLE["label_fontsize"])
     _ax.grid(True, linestyle='--', alpha=PLOT_STYLE["grid_alpha"])
     _ax.tick_params(axis='y', labelsize=PLOT_STYLE["tick_fontsize"])
 
@@ -439,11 +441,11 @@ def ___(mo):
 def _(PLOT_STYLE, np, plt, save_fig, set_ax_border, setup_plot_style):
     # --- Style Setup ---
     _PLOT_STYLE = dict(PLOT_STYLE)
-    _PLOT_STYLE['x_tick_fontsize'] = 18
+    _PLOT_STYLE['x_tick_fontsize'] = 22
     _colors = setup_plot_style(_PLOT_STYLE)
 
     # --- Data ---
-    _OPERATIONS = ['Sever.GetAccumulator', 'Sever.UpdateAccumulator', 'Prevoke.Revoke', 'Prevoke.VerifyPhase1', 'Prevoke.Issue']
+    _OPERATIONS = ['Sever.GetAcc', 'Sever.UpdateAcc', 'Prevoke.Revoke', 'Prevoke.VerifyPhase1', 'Prevoke.Issue']
     _THROUGHPUT_DATA = [528.3, 264.3, 112, 200, 108]  # TPS
     _LATENCY_DATA = [10, 60, 250, 20, 270]  # ms
 
@@ -470,7 +472,7 @@ def _(PLOT_STYLE, np, plt, save_fig, set_ax_border, setup_plot_style):
     # Since the horizontal alignment (`ha`) of the labels is 'right', this change
     # results in the labels being drawn directly under the latency bars.
     _ax1.set_xticks(_x_pos + _bar_width)
-    _ax1.set_xticklabels([x.replace('.', '.\n') for x in _OPERATIONS], fontsize=_PLOT_STYLE["x_tick_fontsize"], rotation=15, ha='right')
+    _ax1.set_xticklabels([x.replace('.', '.\n') for x in _OPERATIONS], fontsize=_PLOT_STYLE["x_tick_fontsize"], rotation=20, ha='right')
     _ax1.set_xlabel('Operations', fontsize=_PLOT_STYLE["label_fontsize"])
 
     set_ax_border(_ax1)
